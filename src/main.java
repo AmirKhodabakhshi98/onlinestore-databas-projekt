@@ -5,9 +5,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 
-public class control {
+public class main {
 
-    public control() {
+    public main() {
 
 
 
