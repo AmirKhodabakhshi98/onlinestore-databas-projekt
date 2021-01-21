@@ -10,8 +10,6 @@ public class Connection {
     private static Statement statement;
   //  private ResultSet res;
 
-    //Constructor that connects to the msql database Onlineserver
-    public static void Connect(){
 
         //komma ihåg att använda conn.close, statement.close senare när vi vet hur d ska hanteras?
 
@@ -128,7 +126,6 @@ public class Connection {
     }
 
     public static void main(String[] args) {
-        Connect();
         connectCustomer("user3", "pw3");
 
     }
