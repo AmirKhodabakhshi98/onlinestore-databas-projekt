@@ -129,7 +129,8 @@ public class Connection {
 
     public static void main(String[] args) {
         connect();
-        connectCustomer("user3", "pw3");
+
+
 
     }
 }

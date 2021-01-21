@@ -3,12 +3,27 @@ package model;
 import database.Connection;
 
 public class Suppliers {
-    String query;
+    /*
+    private String name;
+    private int phonenbr;
+    private String address;
+
+
+    public Suppliers(String name, int phonenbr, String address){
+        this.name=name;
+        this.address=address;
+        this.phonenbr=phonenbr;
+    }
+
+     */
+
+
+    private static String query;
 
     //Add a supplier
-    public void addSupplier(String name, int phonenbr, String address){
+    public static void addSupplier(String name, int phonenbr, String address){
         query = "Insert into Supplier (Name, Phone_number, Address) " +
-                " (" + name + ", " + phonenbr + ", " + address + ");" ;
+                " values(" + name + ", " + phonenbr + ", " + address + ");" ;
 
         Connection.executeQuery(query);
 
