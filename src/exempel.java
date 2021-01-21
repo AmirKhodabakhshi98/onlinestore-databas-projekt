@@ -1,5 +1,7 @@
 import java.sql.*;
 
+
+
 public class exempel {
 
 
@@ -7,13 +9,10 @@ public class exempel {
     public exempel() {
 
         try {
-
-
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             //   String dbURL="jdbc:sqlserver://localhost\\sqlexpress;user=DESKTOP-RPVA9PI\\Amir;password=";
             //  String dbURL="jd-bc:sqlserver://localhost:1433;databaseName=School;user=DESKTOP-RPVA9PI\\Amir;";
             String dbURL = "jdbc:sqlserver://localhost;databasename=school";
-            String user = "DESKTOP-RPVA9PI/Amir";
 
             Connection conn = DriverManager.getConnection(dbURL, "sa", "secret");
             if (conn != null) {
@@ -40,8 +39,6 @@ public class exempel {
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
-
-
     }
 
     public static void main(String[] args) {
