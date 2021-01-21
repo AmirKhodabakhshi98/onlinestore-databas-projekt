@@ -51,7 +51,7 @@ public class Connection {
     }
 
     //Method for checking if an admins account exist in the database.
-    public static void connectAdmin(String username, String password){
+    public static void connectAdmin(String username, String password){  //ändra till bool sen
         try {
 
             String getAdmins =
