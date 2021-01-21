@@ -1,17 +1,17 @@
-package controllers;
+package database;
 
 import java.sql.*;
 
 
 
-public class Connect {
+public class Connection {
 
-    private static Connection conn;
+    private static java.sql.Connection conn;
     private static Statement statement;
   //  private ResultSet res;
 
     //Constructor that connects to the msql database Onlineserver
-    public Connect(){
+    public static void Connect(){
 
         //komma ihåg att använda conn.close, statement.close senare när vi vet hur d ska hanteras?
 
@@ -49,6 +49,7 @@ public class Connect {
         return res;
 
     }
+
     //Method for checking if an admins account exist in the database.
     public static void connectAdmin(String username, String password){
         try {
@@ -127,8 +128,8 @@ public class Connect {
     }
 
     public static void main(String[] args) {
-        Connect con = new Connect();
-        connectCustomer("user6", "pw6");
+        Connect();
+        connectCustomer("user3", "pw3");
 
     }
 }
