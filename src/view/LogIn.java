@@ -14,6 +14,7 @@ public class LogIn extends JFrame {
     JLabel pswrdLbl = new JLabel("Password: ");
     JTextField logInTxt = new JTextField();
     JTextField passwordTxt = new JTextField();
+    //Hi
 
 
     public LogIn(){
