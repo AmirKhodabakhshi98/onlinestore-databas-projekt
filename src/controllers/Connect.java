@@ -10,14 +10,18 @@ public class Connect {
     private static Statement statement;
   //  private ResultSet res;
 
+    //Constructor that connects to the msql database Onlineserver
     public Connect(){
 
-        //komma ihåg att använda conn.close, statemnet.close senare när vi vet hur d ska hanteras
+        //komma ihåg att använda conn.close, statement.close senare när vi vet hur d ska hanteras?
+
+        String user = "sa";
+        String password = "secret";
 
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             String dbURL = "jdbc:sqlserver://localhost;databasename=OnlineStore";
-            conn = DriverManager.getConnection(dbURL, "sa", "secret");
+            conn = DriverManager.getConnection(dbURL, user, password);
 
             if (conn != null) {
                 System.out.println("Connected");
@@ -32,6 +36,7 @@ public class Connect {
 
     }
 
+    //Method to send querys to the database and get back the ResultSet
     public static ResultSet executeQuery(String query){
         ResultSet res = null;
 
@@ -44,7 +49,7 @@ public class Connect {
         return res;
 
     }
-
+    //Method for checking if an admins account exist in the database.
     public static void connectAdmin(String username, String password){
         try {
 
@@ -72,7 +77,7 @@ public class Connect {
             System.out.println(userExists);
             if (userExists){
                 System.out.println("Admin logged in");
-            }
+            }else System.out.println("Account does not exist");
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -80,7 +85,8 @@ public class Connect {
 
     }
 
-    public static void connectCustomer(String username, String password){
+    //Method for checking if a customers account exist in the database.
+    public static boolean connectCustomer(String username, String password){
 
         try {
 
@@ -104,21 +110,25 @@ public class Connect {
                 }
 
 
-
                 System.out.println(userExists);
                 if (userExists){
                     System.out.println("Costumer logged in");
+                    return true;
+                }else {
+                    System.out.println(("Account does not exist"));
+                    return false;
                 }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return false;
 
     }
 
     public static void main(String[] args) {
         Connect con = new Connect();
-        connectCustomer("user1", "pw1");
+        connectCustomer("user6", "pw6");
 
     }
 }
