@@ -1,5 +1,7 @@
 package database;
 
+import model.Product;
+
 import java.sql.*;
 
 
@@ -37,7 +39,7 @@ public class Connection {
     }
 
     //Method to send querys to the database and get back the ResultSet
-    public static ResultSet executeQuery(String query){
+    public static ResultSet executeQueryWithResult(String query){
         ResultSet res = null;
 
         try {
@@ -46,9 +48,22 @@ public class Connection {
             throwables.printStackTrace();
         }
 
-        return res;
+            return res;
 
     }
+
+    //Method for executing querys that expect no resultset, eg INSERT or DELETE
+    public static void executeQueryNoResult(String query){
+
+        try {
+            statement.executeUpdate(query);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 
     //Method for checking if an admins account exist in the database.
     public static void connectAdmin(String username, String password){  //ändra till bool sen
@@ -58,7 +73,7 @@ public class Connection {
                     "Select Username, Password " +
                             " FROM BLANK"; //replace blank later....
 
-            ResultSet res = executeQuery(getAdmins);
+            ResultSet res = executeQueryWithResult(getAdmins);
 
             boolean userExists = false;
 
@@ -95,7 +110,7 @@ public class Connection {
                 "Select Username, Password " +
                         " FROM Customer";
 
-                 ResultSet res = executeQuery(getUsers);
+                 ResultSet res = executeQueryWithResult(getUsers);
 
                 boolean userExists = false;
 

@@ -25,7 +25,7 @@ public class Suppliers {
         query = "Insert into Supplier (Name, Phone_number, Address) " +
                 " values(" + name + ", " + phonenbr + ", " + address + ");" ;
 
-        Connection.executeQuery(query);
+        Connection.executeQueryWithResult(query);
 
     }
 

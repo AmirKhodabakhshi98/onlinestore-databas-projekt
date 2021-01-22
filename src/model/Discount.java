@@ -20,7 +20,7 @@ public class Discount {
     query = "Insert into Product_Discount (product_id, discount_id, start_id, end_date) " +
             "values (" + product_id + ", " + discount_id + ", " + start_date + "," + end_date + ");" ;
 
-        Connection.executeQuery(query);
+        Connection.executeQueryWithResult(query);
 
     }
 
@@ -28,7 +28,7 @@ public class Discount {
         query = "Insert into Discount (discount_id, description, percentage)" +
                 "values (" + discount_id + ", " + description + ", " + percentage + ");" ;
 
-        Connection.executeQuery(query);
+        Connection.executeQueryWithResult(query);
     }
 
     public void seeDiscountHistory(){
@@ -36,7 +36,7 @@ public class Discount {
                 "join Discount d on d.Discount_id = p.Discount_id " +
                 "where p.Product_id = d.percentage";
 
-                Connection.executeQuery(query);
+                Connection.executeQueryWithResult(query);
     }
 
     public void discountToProductDate(Product product, int date){

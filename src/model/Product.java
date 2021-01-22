@@ -31,10 +31,10 @@ public class Product {
     public static void addProduct(Product product){
 
         query =  "Insert into Product (Product_id, Supplier_name, Name, Base_price, Quantity) " +
-                "values (" + product.id + ", " + product.supplier + ", " + product.name + ", " + product.price + ", "
+                "values (" + product.id + ", '" + product.supplier + "', '" + product.name + "', " + product.price + ", "
                 + product.quantity  + ");";
 
-        Connection.executeQuery(query);
+        Connection.executeQueryNoResult(query);
 
     }
 
@@ -46,7 +46,7 @@ public class Product {
             query = "Update Product " +
                     "Set Quantity = " + quantity +
                     "Where Product_id = " + id;
-            Connection.executeQuery(query);
+            Connection.executeQueryWithResult(query);
 
         }else JOptionPane.showMessageDialog(null,"Quantity can't be negative");
 
@@ -69,11 +69,11 @@ public class Product {
         // query to count nbr of products
         query = "Select count(Product_id) as rows " +
                 "From Product";
-        ResultSet res = Connection.executeQuery(query);
+        ResultSet res = Connection.executeQueryWithResult(query);
         products = new Product[res.getInt("rows")]; //initializes array based on nbr of products
 
         query = "Select * from product";
-        res = Connection.executeQuery(query);   // returns all products
+        res = Connection.executeQueryWithResult(query);   // returns all products
 
         int i = 0;
         Product prod;

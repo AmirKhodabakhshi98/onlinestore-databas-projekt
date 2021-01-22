@@ -43,7 +43,7 @@ public class Customer {
 
     public static void insertOne(Customer customer) {
 
-        Connection.executeQuery(
+        Connection.executeQueryWithResult(
             "INSERT INTO Customer (" +
                 "Firstname, " +
                 "Lastname, " +
@@ -71,7 +71,7 @@ public class Customer {
 
     public static Customer findByUsername(String username) throws SQLException {
 
-        ResultSet resultSet = Connection.executeQuery(
+        ResultSet resultSet = Connection.executeQueryWithResult(
             "SELECT *" +
             "FROM Customer" +
             "WHERE Username = " + "'" +username + "'"
