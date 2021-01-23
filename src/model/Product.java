@@ -5,6 +5,7 @@ import database.Connection;
 import javax.swing.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class Product {
 
@@ -46,7 +47,7 @@ public class Product {
             query = "Update Product " +
                     "Set Quantity = " + quantity +
                     "Where Product_id = " + id;
-            Connection.executeQueryWithResult(query);
+            Connection.executeQueryNoResult(query);
 
         }else JOptionPane.showMessageDialog(null,"Quantity can't be negative");
 
@@ -58,39 +59,39 @@ public class Product {
         query = "Delete from Product " +
                 "Where Product_id = " + id;
 
+        Connection.executeQueryNoResult(query);
     }
 
-    //returns an array of all Products
-    public static Product[] getAllProducts(){
+
+    public static ArrayList<Product> getAllProducts(){
         try {
 
-        Product[] products;
+            ArrayList<Product> products = new ArrayList<Product>();
 
-        // query to count nbr of products
-        query = "Select count(Product_id) as rows " +
-                "From Product";
-        ResultSet res = Connection.executeQueryWithResult(query);
-        products = new Product[res.getInt("rows")]; //initializes array based on nbr of products
+            // query to count nbr of products
+            query = "Select count(Product_id) as rows " +
+                    "From Product";
+            ResultSet res = Connection.executeQueryWithResult(query);
+        //    products = new Product[res.getInt("rows")]; //initializes array based on nbr of products
 
-        query = "Select * from product";
-        res = Connection.executeQueryWithResult(query);   // returns all products
+            query = "Select * from product";
+            res = Connection.executeQueryWithResult(query);   // returns all products
 
-        int i = 0;
-        Product prod;
+            int i = 0;
+            Product prod;
 
-        //Loops through the resultset and filling the products array with product objects
-        while (res.next()){
-            prod = new Product(res.getInt("Order_id"),
-                    res.getNString("Supplier_name"),
-                    res.getNString("Name"),
-                    res.getInt("Base_price"),
-                    res.getInt("Quantity"));
+            //Loops through the resultset and filling the products array with product objects
+            while (res.next()){
+                prod = new Product(res.getInt("Product_id"),
+                        res.getNString("Supplier_name"),
+                        res.getNString("Name"),
+                        res.getInt("Base_price"),
+                        res.getInt("Quantity"));
 
-            products[i] = prod;
-            i++;
-        }
+                products.add(prod);
+            }
 
-        return products;
+            return products;
 
         }catch (SQLException e){
             e.printStackTrace();
@@ -99,8 +100,26 @@ public class Product {
         return null;
 
     }
+    
 
+    public int getId() {
+        return id;
+    }
 
+    public String getSupplier() {
+        return supplier;
+    }
 
+    public String getName() {
+        return name;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
 }
 
