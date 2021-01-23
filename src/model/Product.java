@@ -28,7 +28,7 @@ public class Product {
 
 
 
-    //Add a new product
+    //Sends query to db to add new product row
     public static void addProduct(Product product){
 
         query =  "Insert into Product (Product_id, Supplier_name, Name, Base_price, Quantity) " +
@@ -39,7 +39,7 @@ public class Product {
 
     }
 
-    //Alter quantity of a product based on input id
+    //Alter quantity of a product in db based on input id
     public static void editProductQuantity(int id, int quantity){
 
         if (quantity>=0) {
@@ -53,7 +53,7 @@ public class Product {
 
     }
 
-    //Delete product based on input id
+    //Delete a product in db based on input id
     public static void deleteProduct(int id){
 
         query = "Delete from Product " +
@@ -62,31 +62,54 @@ public class Product {
         Connection.executeQueryNoResult(query);
     }
 
-    //Returns an arraylist of Products representing all products stored in the database
-    public static ArrayList<Product> getAllProducts(){
+
+    //returns number of products in db
+    public static int getRows(){
+
+        query = "Select count(Product_id)  " +
+                "from Product ";
+
+        ResultSet res = Connection.executeQueryWithResult(query);
+
+        int rows = 0;
+
         try {
 
-            ArrayList<Product> products = new ArrayList<Product>();
+            res.next(); //Moves cursor to first row
+             rows = res.getInt(1);  //retrieves count value
 
 
-            query = "Select * from product";
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return rows;
+    }
+
+    //Returns an array of representing all products stored in the database
+    public static String[][] getAllProducts(){
+        try {
+
+            query = "Select * from Product";
             ResultSet res = Connection.executeQueryWithResult(query);   // returns all products
 
 
-            Product prod;
 
-            //Loops through the resultset and filling the products arraylist with product objects
-            while (res.next()){
-                prod = new Product(res.getInt("Product_id"),
-                        res.getNString("Supplier_name"),
-                        res.getNString("Name"),
-                        res.getInt("Base_price"),
-                        res.getInt("Quantity"));
+            String[][] prodArray = new String[getRows()][5];
 
-                products.add(prod);
+
+            for (int i=0; i<prodArray.length; i++){
+                res.next();
+                prodArray[i][0] = String.valueOf(res.getInt("Product_id"));
+                prodArray[i][1] = res.getNString("Supplier_name");
+                prodArray[i][2] = res.getNString("Name");
+                prodArray[i][3] = String.valueOf(res.getInt("Base_price"));
+                prodArray[i][4] = String.valueOf(res.getInt("Quantity"));
+
             }
 
-            return products;
+
+
+            return prodArray;
 
         }catch (SQLException e){
             e.printStackTrace();

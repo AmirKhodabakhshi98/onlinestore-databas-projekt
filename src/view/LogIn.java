@@ -1,23 +1,28 @@
 package view;
 
+import controllers.Controller;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class LogIn extends JFrame {
-    JPanel mainPnl = new JPanel();
-    JPanel logInPnl = new JPanel();
-    ImageIcon onlineStore = new ImageIcon("image/Online store.PNG");
-    JLabel onlineLbl = new JLabel(onlineStore);
-    JButton custBtn = new JButton("Customer");
-    JButton adminBtn = new JButton("Admin");
-    JLabel logInLbl = new JLabel("Username: ");
-    JLabel pswrdLbl = new JLabel("Password: ");
-    JTextField logInTxt = new JTextField();
-    JTextField passwordTxt = new JTextField();
-    //Hi
+    private JPanel mainPnl = new JPanel();
+    private   JPanel logInPnl = new JPanel();
+    private   ImageIcon onlineStore = new ImageIcon("image/Online store.PNG");
+    private   JLabel onlineLbl = new JLabel(onlineStore);
+    private   JButton custBtn = new JButton("Customer");
+    private  JButton adminBtn = new JButton("Admin");
+    private  JLabel logInLbl = new JLabel("Username: ");
+    private  JLabel pswrdLbl = new JLabel("Password: ");
+    private  JTextField logInTxt = new JTextField();
+    private  JTextField passwordTxt = new JTextField();
+    private  Controller controller;
 
 
-    public LogIn(){
+    public LogIn(Controller controller){
+        this.controller=controller;
     setSize(350,320);
     setVisible(true);
     setLocationRelativeTo(null);
@@ -29,6 +34,9 @@ public class LogIn extends JFrame {
     setPanelSize();
 
 
+    actionListener al = new actionListener();
+    custBtn.addActionListener(al);
+    adminBtn.addActionListener(al);
 
     mainPnl.setBackground(Color.white);
     mainPnl.add(logInPnl);
@@ -50,16 +58,52 @@ public class LogIn extends JFrame {
     logInPnl.add(custBtn);
     logInPnl.add(adminBtn);
     mainPnl.validate();
+
+
+
 }
 
-public void setPanelSize(){
+    private  void setPanelSize(){
         mainPnl.setPreferredSize(new Dimension(350,430));
 }
 
-    public static void main(String[] args) {
-    LogIn log = new LogIn();
 
+
+    //Sends input data to controller to perform customer login validation
+    private void customerLogin(){
+
+        controller.customerLogin(logInTxt.getText(), passwordTxt.getText());
+        this.dispose();
 
     }
+
+    //Sends input data to controller to perform admin login validation
+    private void adminLogin(){
+
+        controller.adminLogin(logInTxt.getText(), passwordTxt.getText());
+        this.dispose();
+
+    }
+
+
+    private class actionListener implements ActionListener {
+
+
+        public void actionPerformed(ActionEvent e) {
+
+            if (e.getSource()==custBtn){
+                customerLogin();
+
+            }
+
+            if (e.getSource()==adminBtn){
+                adminLogin();
+            }
+
+
+
+        }
+    }
+
 
 }

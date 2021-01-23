@@ -1,7 +1,9 @@
 package database;
 
+import controllers.Controller;
 import model.Product;
 import model.Suppliers;
+import view.*;
 
 import java.sql.*;
 
@@ -17,6 +19,7 @@ public class Connection {
     public static void connect(){
 
         //komma ihåg att använda conn.close, statement.close senare när vi vet hur d ska hanteras?
+        //uppdatera logic för failed/connected lite
 
         String user = "sa";
         String password = "secret";
@@ -31,7 +34,7 @@ public class Connection {
 
             }else System.out.println("Error, connection failed");
 
-             statement = conn.createStatement();
+         //    statement = conn.createStatement();
 
         }catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
@@ -44,6 +47,9 @@ public class Connection {
         ResultSet res = null;
 
         try {
+
+             statement = conn.createStatement();
+
             res = statement.executeQuery(query);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -57,6 +63,9 @@ public class Connection {
     public static void executeQueryNoResult(String query){
 
         try {
+
+
+            statement = conn.createStatement();
             statement.executeUpdate(query);
 
         } catch (SQLException e) {
@@ -67,39 +76,34 @@ public class Connection {
 
 
     //Method for checking if an admins account exist in the database.
-    public static void connectAdmin(String username, String password){  //ändra till bool sen
+    public static boolean connectAdmin(String username, String password) {
         try {
 
             String getAdmins =
                     "Select Username, Password " +
-                            " FROM BLANK"; //replace blank later....
+                            " FROM Admin"; //
 
             ResultSet res = executeQueryWithResult(getAdmins);
 
-            boolean userExists = false;
 
-            while (res.next()){
+            while (res.next()) {
 
                 String user = res.getNString("Username"); //ändra eventuellt kolumnnamn...
                 String pw = res.getNString("Password");
 
-                if (user.equals(username) && pw.equals(password)){
-                    userExists = true;
-                    break;
+                if (user.equals(username) && pw.equals(password)) {
+                    System.out.println("Admin logged in");
+                    return true;
+
                 }
             }
 
-
-
-            System.out.println(userExists);
-            if (userExists){
-                System.out.println("Admin logged in");
-            }else System.out.println("Account does not exist");
-
         } catch (SQLException e) {
             e.printStackTrace();
-        }
 
+        }
+        System.out.println("admin login failed");
+        return false;
     }
 
     //Method for checking if a customers account exist in the database.
@@ -113,7 +117,6 @@ public class Connection {
 
                  ResultSet res = executeQueryWithResult(getUsers);
 
-                boolean userExists = false;
 
                 while (res.next()){
 
@@ -121,33 +124,27 @@ public class Connection {
                     String pw = res.getNString("Password");
 
                     if (user.equals(username) && pw.equals(password)){
-                        userExists = true;
-                        break;
+                        System.out.println("Costumer logged in");
+                        return true;
                     }
-                }
-
-
-                System.out.println(userExists);
-                if (userExists){
-                    System.out.println("Costumer logged in");
-                    return true;
-                }else {
-                    System.out.println(("Account does not exist"));
-                    return false;
                 }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        System.out.println(("Account does not exist"));
         return false;
 
     }
 
     public static void main(String[] args) {
         connect();
-        Suppliers suppliers = new Suppliers();
-        String str = "malmö";
-        Suppliers.addSupplier("Inet", 000,  str);
+        Controller controller = new Controller();
+     //   new startingMenu(controller);
+        new adminProductPage(controller);
+
+
 
 
     }

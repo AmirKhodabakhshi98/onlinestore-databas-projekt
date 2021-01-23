@@ -43,7 +43,7 @@ public class Customer {
 
     public static void insertOne(Customer customer) {
 
-        Connection.executeQueryWithResult(
+        Connection.executeQueryNoResult(
             "INSERT INTO Customer (" +
                 "Firstname, " +
                 "Lastname, " +
@@ -53,18 +53,19 @@ public class Customer {
                 "Phone_number, " +
                 "Country, " +
                 "City, " +
-                "Street_address, " +
-            ")" +
-            "VALUES(" +
-                customer.firstName + ", " +
-                customer.lastName + ", " +
-                customer.email + ", " +
-                customer.username + ", " +
-                customer.password + ", " +
-                customer.phoneNumber + ", " +
-                customer.country + ", " +
+                "Street_address " +
+            ") " +
+            "VALUES('" +
+                customer.firstName + "', '" +
+                customer.lastName + "', '" +
+                customer.email + "', '" +
+                customer.username + "', '" +
+                customer.password + "', " +
+                customer.phoneNumber + ", '" +
+                customer.country + "', '" +
+                customer.city + "', '" +
                 customer.streetAddress +
-            ")"
+            "')"
         );
     }
 
