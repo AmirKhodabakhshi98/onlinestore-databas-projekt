@@ -62,25 +62,20 @@ public class Product {
         Connection.executeQueryNoResult(query);
     }
 
-
+    //Returns an arraylist of Products representing all products stored in the database
     public static ArrayList<Product> getAllProducts(){
         try {
 
             ArrayList<Product> products = new ArrayList<Product>();
 
-            // query to count nbr of products
-            query = "Select count(Product_id) as rows " +
-                    "From Product";
-            ResultSet res = Connection.executeQueryWithResult(query);
-        //    products = new Product[res.getInt("rows")]; //initializes array based on nbr of products
 
             query = "Select * from product";
-            res = Connection.executeQueryWithResult(query);   // returns all products
+            ResultSet res = Connection.executeQueryWithResult(query);   // returns all products
 
-            int i = 0;
+
             Product prod;
 
-            //Loops through the resultset and filling the products array with product objects
+            //Loops through the resultset and filling the products arraylist with product objects
             while (res.next()){
                 prod = new Product(res.getInt("Product_id"),
                         res.getNString("Supplier_name"),
@@ -100,7 +95,6 @@ public class Product {
         return null;
 
     }
-    
 
     public int getId() {
         return id;

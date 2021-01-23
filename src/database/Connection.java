@@ -1,6 +1,7 @@
 package database;
 
 import model.Product;
+import model.Suppliers;
 
 import java.sql.*;
 
@@ -144,7 +145,9 @@ public class Connection {
 
     public static void main(String[] args) {
         connect();
-
+        Suppliers suppliers = new Suppliers();
+        String str = "malmö";
+        Suppliers.addSupplier("Inet", 000,  str);
 
 
     }

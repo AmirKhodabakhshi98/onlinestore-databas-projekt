@@ -23,9 +23,9 @@ public class Suppliers {
     //Add a supplier
     public static void addSupplier(String name, int phonenbr, String address){
         query = "Insert into Supplier (Name, Phone_number, Address) " +
-                " values(" + name + ", " + phonenbr + ", " + address + ");" ;
+                " values('" + name + "', " + phonenbr + ", '" + address + "');" ;
 
-        Connection.executeQueryWithResult(query);
+        Connection.executeQueryNoResult(query);
 
     }
 
