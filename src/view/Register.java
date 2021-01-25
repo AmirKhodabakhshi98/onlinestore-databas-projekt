@@ -7,7 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class register extends JFrame {
+public class Register extends JFrame {
 
     private JLabel lblUser = new JLabel("Username");
     private JLabel lblFirstN = new JLabel("Firstname");
@@ -33,7 +33,7 @@ public class register extends JFrame {
 
     private Controller controller;
 
-    public register(Controller controller){
+    public Register(Controller controller){
         this.controller=controller;
 
         setLayout(new GridLayout(10,2));

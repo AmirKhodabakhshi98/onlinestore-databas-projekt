@@ -1,8 +1,6 @@
 package database;
 
 import controllers.Controller;
-import model.Product;
-import model.Suppliers;
 import view.*;
 
 import java.sql.*;
@@ -141,8 +139,8 @@ public class Connection {
     public static void main(String[] args) {
         connect();
         Controller controller = new Controller();
-     //   new startingMenu(controller);
-        new adminProductPage(controller);
+    //    new startingMenu(controller);
+        new AdminProductMenu(controller);
 
 
 

@@ -7,7 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class startingMenu extends JFrame {
+public class StartingMenu extends JFrame {
 
 
     private Controller controller;
@@ -16,7 +16,7 @@ public class startingMenu extends JFrame {
 
 
 
-    public startingMenu(Controller controller){
+    public StartingMenu(Controller controller){
 
         this.controller=controller;
         setSize(300,300);
@@ -49,7 +49,7 @@ public class startingMenu extends JFrame {
     private void register(){
 
         this.dispose();
-        new register(controller);
+        new Register(controller);
     }
 
 

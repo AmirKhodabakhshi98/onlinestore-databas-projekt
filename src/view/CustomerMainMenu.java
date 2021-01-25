@@ -4,14 +4,14 @@ import controllers.Controller;
 
 import javax.swing.*;
 
-public class customerMainMenu extends JFrame {
+public class CustomerMainMenu extends JFrame {
 
 
     private Controller controller;
 
 
 
-    public customerMainMenu(Controller controller){
+    public CustomerMainMenu(Controller controller){
         this.controller=controller;
 
 

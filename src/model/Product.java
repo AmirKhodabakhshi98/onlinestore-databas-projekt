@@ -39,6 +39,18 @@ public class Product {
 
     }
 
+    public static void addProduct(int id, String supplier, String name, int price, int quantity){
+
+        query =  "Insert into Product (Product_id, Supplier_name, Name, Base_price, Quantity) " +
+                "values (" + id + ", '" + supplier + "', '" + name + "', " + price + ", "
+                + quantity  + ");";
+
+        Connection.executeQueryNoResult(query);
+
+    }
+
+
+
     //Alter quantity of a product in db based on input id
     public static void editProductQuantity(int id, int quantity){
 

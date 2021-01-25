@@ -7,7 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class addSupplier extends JFrame {
+public class AddSupplier extends JFrame {
 
     private JLabel lblName = new JLabel("Name");
     private JLabel lblNbr = new JLabel("Phone number (with no space)");
@@ -19,9 +19,9 @@ public class addSupplier extends JFrame {
     private JButton addButton = new JButton("Add");
     private  JButton menuButton = new JButton("Main Menu");
 
-    public addSupplier(Controller controller){
+    public AddSupplier(Controller controller){
         this.controller=controller;
-        this.setTitle("add new supplier");
+        this.setTitle("New Supplier");
         setLayout(new GridLayout(4,2));
         add(lblName);
         add(tfName);
@@ -43,7 +43,7 @@ public class addSupplier extends JFrame {
     //Takes you back to admin main menu
     private void goToMainMenu(){
         this.dispose();
-        new adminMainMenu(controller);
+        new AdminMenu(controller);
     }
 
     //Sends input data to controller in order to add new supplier to db

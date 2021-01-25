@@ -20,11 +20,11 @@ public class Controller {
 
         //logic for if login is successful or not
         if (loggedIn){
-            new customerMainMenu(this);
+            new CustomerMainMenu(this);
         }
         else {
             JOptionPane.showMessageDialog(null, "Error logging in");
-            new startingMenu(this);
+            new StartingMenu(this);
         }
 
     }
@@ -36,11 +36,11 @@ public class Controller {
 
         //logic for if login is successful or not
         if (loggedIn){
-            new adminMainMenu(this);
+            new AdminMenu(this);
         }
         else  {
             JOptionPane.showMessageDialog(null,"Error logging in");
-            new startingMenu(this);
+            new StartingMenu(this);
         }
 
 
@@ -55,10 +55,20 @@ public class Controller {
 
     }
 
+    public void addProduct(int id, String supplier, String name, int price, int quantity){
+
+        Product.addProduct(id,supplier,name,price,quantity);
+
+    }
+
     public void editProduct(int id, int quantity){
         Product.editProductQuantity(id,quantity);
 
 
+    }
+
+    public void deleteProduct(int id){
+        Product.deleteProduct(id);
     }
 
     //Adds new supplier to db
