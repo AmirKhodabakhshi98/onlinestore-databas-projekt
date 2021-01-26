@@ -22,6 +22,7 @@ public class AdminProductMenu extends JFrame implements ActionListener {
     private JPanel pnlDelete;
     private JPanel pnlAddProduct;
   //  private JPanel pnlAddSupplier;
+    private JPanel pnlAdminProductSearch;
 
     private JLabel lblEdit = new JLabel("Edit");
     private JLabel lblEditID = new JLabel("ID");
@@ -40,13 +41,14 @@ public class AdminProductMenu extends JFrame implements ActionListener {
     private JButton btnEdit = new JButton("Edit Quantity");
     private JButton btnDelete = new JButton("Delete Product");
     private JButton btnAddProduct = new JButton("Add Product");
+    private JButton btnSearch = new JButton("Search");
   //  private JButton btnSupplierMenu = new JButton("Add supplier");
 
     public AdminProductMenu(Controller controller){
 
         this.controller=controller;
         setTitle("Admin Product Menu");
-        setSize(1100,500);
+        setSize(800,500);
         setLocationRelativeTo(null);
         setLayout(new GridLayout(1,2));
 
@@ -56,9 +58,10 @@ public class AdminProductMenu extends JFrame implements ActionListener {
         panelLeft.setLayout(new BorderLayout());
         panelLeft.add(new JScrollPane(table), BorderLayout.CENTER);
 
-        panelBtn.setLayout(new GridLayout(1,8));
+        panelBtn.setLayout(new GridLayout(2,5));
         panelBtn.add(btnEditMenu);
         panelBtn.add(btnDeleteMenu);
+        panelBtn.add(btnSearch);
    //     panelBtn.add(btnDiscountMenu);
    //     panelBtn.add(btnOrderMenu);
   //      panelBtn.add(btnSupplierMenu);
@@ -72,6 +75,7 @@ public class AdminProductMenu extends JFrame implements ActionListener {
         btnDiscountMenu.addActionListener(this);
         btnMainMenu.addActionListener(this);
         btnAddProduct.addActionListener(this);
+        btnSearch.addActionListener(this);
 
      //   panelRight.setLayout(new GridLayout(1,1));
         panelRight.setLayout(new BorderLayout());
@@ -86,6 +90,7 @@ public class AdminProductMenu extends JFrame implements ActionListener {
          pnlEdit = new EditPanel(this);
          pnlDelete = new DeletePanel(this);
          pnlAddProduct = new AddProduct(controller,this);
+         pnlAdminProductSearch = new AdminProductSearch(controller,this);
      //   pnlAddSupplier = new addSupplier(controller);
 
     }
@@ -139,6 +144,9 @@ public class AdminProductMenu extends JFrame implements ActionListener {
 
             if (e.getSource()==btnAddProduct){
                 updatePanel(pnlAddProduct);
+            }
+            if (e.getSource()==btnSearch){
+                updatePanel(pnlAdminProductSearch);
             }
 
 

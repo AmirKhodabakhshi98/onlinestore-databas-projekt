@@ -139,8 +139,8 @@ public class Connection {
     public static void main(String[] args) {
         connect();
         Controller controller = new Controller();
-        new StartingMenu(controller);
-     //   new AdminProductMenu(controller);
+    //    new StartingMenu(controller);
+        new AdminProductMenu(controller);
 
 
 
