@@ -7,7 +7,7 @@ public class Discount {
     private int percentage;
     private int date;
     private String discountName;
-    String query;
+    private String query;
 
     //product_id, discount_id, start_date, end_date
 
@@ -16,19 +16,19 @@ public class Discount {
 
     }
 
-    public void addProductDiscounts(String product_id, String discount_id, int start_date, int end_date){
+    public void addProductDiscounts(int product_id, int discount_id, int start_date, int end_date){
     query = "Insert into Product_Discount (product_id, discount_id, start_id, end_date) " +
             "values (" + product_id + ", " + discount_id + ", " + start_date + "," + end_date + ");" ;
 
-        Connection.executeQueryWithResult(query);
+        Connection.executeQueryNoResult(query);
 
     }
 
     public void addDiscounts(int discount_id, String description, int percentage){
         query = "Insert into Discount (discount_id, description, percentage)" +
-                "values (" + discount_id + ", " + description + ", " + percentage + ");" ;
+                "values (" + discount_id + ", '" + description + "', " + percentage + ");" ;
 
-        Connection.executeQueryWithResult(query);
+        Connection.executeQueryNoResult(query);
     }
 
     public void seeDiscountHistory(){
@@ -47,5 +47,6 @@ public class Discount {
     public void discountHistory(){
 
     }
+
 
 }
