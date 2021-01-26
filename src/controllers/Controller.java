@@ -23,7 +23,7 @@ public class Controller {
             new CustomerMainMenu(this);
         }
         else {
-            JOptionPane.showMessageDialog(null, "Error logging in");
+            JOptionPane.showMessageDialog(null, "Invalid username and/or password");
             new StartingMenu(this);
         }
 
@@ -39,7 +39,7 @@ public class Controller {
             new AdminMenu(this);
         }
         else  {
-            JOptionPane.showMessageDialog(null,"Error logging in");
+            JOptionPane.showMessageDialog(null,"Invalid username and/or password");
             new StartingMenu(this);
         }
 
