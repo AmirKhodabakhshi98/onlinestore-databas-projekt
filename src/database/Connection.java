@@ -10,10 +10,9 @@ import java.sql.*;
 public class Connection {
 
     private static java.sql.Connection conn;
-
     private static Statement statement;
-    //private ResultSet res;
-    
+  //  private ResultSet res;
+
     //Constructor that connects to the msql database online server
     public static void connect(){
 
