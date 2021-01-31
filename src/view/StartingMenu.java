@@ -11,8 +11,9 @@ public class StartingMenu extends JFrame {
 
 
     private Controller controller;
-    private JButton btnLogin = new JButton("login");
-    private JButton btnRegister = new JButton("register");
+    private JButton btnLogin = new JButton("Login");
+    private JButton btnRegister = new JButton("Register");
+    private JButton btnBrowse = new JButton("Browse");
 
 
 
@@ -21,14 +22,16 @@ public class StartingMenu extends JFrame {
         this.controller=controller;
         setSize(300,300);
 
-        GridLayout layout = new GridLayout(2,1);
+        GridLayout layout = new GridLayout(3,1);
         layout.setVgap(55);
         setLayout(layout);
         add(btnLogin);
         add(btnRegister);
+        add(btnBrowse);
         actionListener al = new actionListener();
         btnLogin.addActionListener(al);
         btnRegister.addActionListener(al);
+        btnBrowse.addActionListener(al);
 
         setLocationRelativeTo(null);
 
@@ -51,6 +54,10 @@ public class StartingMenu extends JFrame {
         this.dispose();
         new Register(controller);
     }
+    private void browse(){
+        this.dispose();
+        //command here
+    }
 
 
     private class actionListener implements ActionListener {
@@ -62,10 +69,14 @@ public class StartingMenu extends JFrame {
             if (e.getSource() == btnLogin){
                 login();
             }
-            if (e.getSource() == btnRegister)
+            if (e.getSource() == btnRegister) {
                 register();
-
+            }
+            if (e.getSource()==btnBrowse){
+                browse();
+            }
         }
+
     }
 
 

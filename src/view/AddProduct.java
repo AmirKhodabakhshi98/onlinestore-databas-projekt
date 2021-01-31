@@ -25,6 +25,9 @@ public class AddProduct extends JPanel implements ActionListener{
 
     Controller controller;
     AdminProductMenu apm;
+
+
+    //gui class that handles admin adding a new product to db
     public AddProduct(Controller controller, AdminProductMenu apm){
         this.controller=controller;
         this.apm=apm;

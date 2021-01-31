@@ -19,6 +19,7 @@ public class AddSupplier extends JFrame {
     private JButton addButton = new JButton("Add");
     private  JButton menuButton = new JButton("Main Menu");
 
+    //Gui class to let admin create and add new suppliers to DB
     public AddSupplier(Controller controller){
         this.controller=controller;
         this.setTitle("New Supplier");
@@ -29,8 +30,8 @@ public class AddSupplier extends JFrame {
         add(tfNbr);
         add(lblAddress);
         add(tfAddress);
-        add(addButton);
         add(menuButton);
+        add(addButton);
         actionListener al = new actionListener();
         addButton.addActionListener(al);
         menuButton.addActionListener(al);
