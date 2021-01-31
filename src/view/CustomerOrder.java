@@ -30,7 +30,7 @@ public class CustomerOrder extends JFrame implements ActionListener {
     }
 
 
-    if(date>=startdate && date<=enddate)
+ 
 
 
     @Override
