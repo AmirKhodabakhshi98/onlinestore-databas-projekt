@@ -41,7 +41,7 @@ public class Product {
 
     public static void addProduct(int id, String supplier, String name, int price, int quantity){
 
-        query =  "Insert into Product (Product_id, Supplier_name, Name, Base_price, Quantity) " +
+        query = "Insert into Product (Product_id, Supplier_name, Name, Base_price, Quantity) " +
                 "values (" + id + ", '" + supplier + "', '" + name + "', " + price + ", "
                 + quantity  + ");";
 
@@ -104,10 +104,7 @@ public class Product {
             query = "Select * from Product";
             ResultSet res = Connection.executeQueryWithResult(query);   // returns all products
 
-
-
             String[][] prodArray = new String[getRows()][5];
-
 
             for (int i=0; i<prodArray.length; i++){
                 res.next();
@@ -116,7 +113,6 @@ public class Product {
                 prodArray[i][2] = res.getNString("Name");
                 prodArray[i][3] = String.valueOf(res.getInt("Base_price"));
                 prodArray[i][4] = String.valueOf(res.getInt("Quantity"));
-
             }
 
 

@@ -26,11 +26,5 @@ public class Suppliers {
                 " values('" + name + "', " + phonenbr + ", '" + address + "');" ;
 
         Connection.executeQueryNoResult(query);
-
     }
-
-
-
-
-
 }
