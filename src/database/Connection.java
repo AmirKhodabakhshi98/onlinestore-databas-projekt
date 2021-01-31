@@ -140,8 +140,8 @@ public class Connection {
         connect();
         Controller controller = new Controller();
      //   new StartingMenu(controller);
-    //    new AdminProductMenu(controller);
-          new CustomerMainMenu(controller);
+        new AdminProductMenu(controller);
+     //     new CustomerMainMenu(controller);
 
 
 
