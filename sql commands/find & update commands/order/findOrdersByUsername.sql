@@ -1,7 +1,7 @@
 CREATE PROCEDURE findOrdersByUsername
-    @Username nvarchar(30)
+    @Username nvarchar(50)
 AS
     SELECT *
     FROM Order
-    WHERE Order.Username = @Username
+    WHERE Order.Customer_id = @Username
 GO

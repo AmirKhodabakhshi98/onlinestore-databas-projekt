@@ -4,8 +4,8 @@ AS
     SELECT Product.Name
     FROM Product
     WHERE Product_id = (
-        SELECT Order_Products.Product_id
-        FROM Order_Products
-        WHERE Order_Products.Order_id = @Order_id
+        SELECT Order_product.Product_id
+        FROM Order_product
+        WHERE Order_product.Order_id = @Order_id
     )
 GO
