@@ -1,5 +1,5 @@
 CREATE PROCEDURE findCustomerByUsername
-    @Username nvarchar(30)
+    @Username nvarchar(50)
 AS
     SELECT *
     FROM Customer
