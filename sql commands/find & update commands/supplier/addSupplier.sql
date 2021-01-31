@@ -1,5 +1,5 @@
 CREATE PROCEDURE addSupplier
-    @Name nvarchar(30)
+    @Name nvarchar(50)
     @Phone_number int
     @Address nvarchar(50)
 AS
