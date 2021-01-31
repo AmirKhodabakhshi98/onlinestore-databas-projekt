@@ -1,5 +1,5 @@
 CREATE TABLE Customer (
-    Username nvarchar(30) NOT NULL,
+    Username nvarchar(50) NOT NULL,
     Email nvarchar(50) NOT NULL,
     Password nvarchar(50) NOT NULL,
     Firstname nvarchar(50) NOT NULL,

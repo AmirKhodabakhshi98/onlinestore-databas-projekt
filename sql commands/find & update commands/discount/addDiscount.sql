@@ -1,6 +1,6 @@
 CREATE PROCEDURE addDiscount
     @Description nvarchar(50)
-    @Percentage int
+    @Percentage float
 AS
     Insert into Discount (
         description, 
