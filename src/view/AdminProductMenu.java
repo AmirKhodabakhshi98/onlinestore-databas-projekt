@@ -42,13 +42,16 @@ public class AdminProductMenu extends JFrame implements ActionListener {
     private JButton btnDelete = new JButton("Delete Product");
     private JButton btnAddProduct = new JButton("Add Product");
     private JButton btnSearch = new JButton("Search");
+    private JButton btnMaxOrder = new JButton("Max Orders");
+    private JButton btnAllProd = new JButton("All Products");
   //  private JButton btnSupplierMenu = new JButton("Add supplier");
 
+    //Admins gui screen where they can interact with products
     public AdminProductMenu(Controller controller){
 
         this.controller=controller;
         setTitle("Admin Product Menu");
-        setSize(800,500);
+        setSize(900,500);
         setLocationRelativeTo(null);
         setLayout(new GridLayout(1,2));
 
@@ -65,8 +68,10 @@ public class AdminProductMenu extends JFrame implements ActionListener {
    //     panelBtn.add(btnDiscountMenu);
    //     panelBtn.add(btnOrderMenu);
   //      panelBtn.add(btnSupplierMenu);
-        panelBtn.add(btnMainMenu);
         panelBtn.add(btnAddProduct);
+        panelBtn.add(btnMaxOrder);
+        panelBtn.add(btnAllProd);
+        panelBtn.add(btnMainMenu);
         panelLeft.add(panelBtn, BorderLayout.SOUTH);
 
         btnEditMenu.addActionListener(this);
@@ -148,6 +153,14 @@ public class AdminProductMenu extends JFrame implements ActionListener {
             if (e.getSource()==btnSearch){
                 updatePanel(pnlAdminProductSearch);
             }
+            if (e.getSource()==btnMaxOrder){
+                //command here
+
+           }
+            if (e.getSource()==btnAllProd){
+                //command here
+            }
+
 
 
 

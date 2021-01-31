@@ -33,6 +33,7 @@ public class Register extends JFrame {
 
     private Controller controller;
 
+    //Class for registering new customer via GUI
     public Register(Controller controller){
         this.controller=controller;
 
@@ -86,6 +87,8 @@ public class Register extends JFrame {
 
     }
 
+
+
 /*
     private void clearTextfield(){
 
@@ -110,8 +113,13 @@ public class Register extends JFrame {
         public void actionPerformed(ActionEvent e) {
 
             if (e.getSource() == buttonRegister){
-                register();
-            }
+                try{
+                    int x = Integer.parseInt(tfNbr.getText());
+                    register();
+            }catch (NumberFormatException nfe){
+                    JOptionPane.showMessageDialog(null,"Phonenumber must be integers only");
+                }
+                }
 
 
 

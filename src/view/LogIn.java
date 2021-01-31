@@ -21,6 +21,7 @@ public class LogIn extends JFrame {
     private  Controller controller;
 
 
+    //Class for login GUI
     public LogIn(Controller controller){
         this.controller=controller;
     setSize(350,320);

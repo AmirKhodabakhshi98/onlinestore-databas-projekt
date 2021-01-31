@@ -20,6 +20,7 @@ public class AdminProductSearch extends JPanel implements ActionListener {
     private ButtonGroup group;
     private AdminProductMenu apm;
 
+    //Panel for  letting admin search after a product
     public AdminProductSearch(Controller controller, AdminProductMenu apm){
 
         this.apm=apm;
