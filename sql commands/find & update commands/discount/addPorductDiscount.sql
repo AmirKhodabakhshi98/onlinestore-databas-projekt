@@ -1,20 +1,14 @@
 CREATE PROCEDURE addProductDiscount
-    @product_id int
-    @discount_id int
-    @start_id date
-    @end_date date
+    @Start_id DATETIME
+    @End_date DATETIME
 AS
     Insert into Product_Discount 
     (
-        product_id, 
-        discount_id, 
-        start_id, 
-        end_date
+        Start_id,
+        End_date
     )
-    values ( 
-        @product_id, 
-        @discount_id,
-        @start_id, 
-        @end_date
+    values (
+        @Start_id,
+        @End_date
     )
 GO
