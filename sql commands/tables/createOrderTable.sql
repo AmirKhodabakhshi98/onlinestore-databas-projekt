@@ -3,5 +3,6 @@ CREATE TABLE Order (
     Customer_id int NOT NULL,
     Confirmed BOOLEAN NOT NULL,
     Date DATETIME NOT NULL,
-    PRIMARY KEY (Order_id, Customer_id)
+    PRIMARY KEY (Order_id)
+    FOREIGN KEY (Customer_id REFERENCES Customer(Customer_id))
 )

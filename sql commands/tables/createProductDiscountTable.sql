@@ -3,6 +3,7 @@ CREATE TABLE Product_discount (
     Discount_id int NOT NULL,
     Start_date DATETIME NOT NULL,
     End_date DATETIME NOT NULL,
-    PRIMARY KEY (Product_id, Start_date, End_date),
-    FOREIGN KEY (Product_id, Discount_id)
+    PRIMARY KEY (Product_id, Discount_id, Start_date, End_date),
+    FOREIGN KEY (Product_id REFERENCES Product(Product_id) ,
+                Discount_id REFERENCES Discount(Discount_id))
 )
