@@ -41,7 +41,7 @@ public class CustomerOrder extends JFrame implements ActionListener {
         return tableModel;
     }
 
-    tableModel.is
+    
 
     public CustomerOrder(Controller controller){
         this.controller=controller;
