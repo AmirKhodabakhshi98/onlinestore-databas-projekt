@@ -14,19 +14,19 @@ public class CustomerOrder extends JFrame implements ActionListener {
 
 
 
-    private MyTableModel tm = new MyTableModel();
-    private DefaultTableModel tableModel = new DefaultTableModel();
 
-    private JTable tableProducts;
+
 
     private JButton btnMenu = new JButton("Main Menu");
     private JButton btnDelete = new JButton("Delete Product");
 
-    private String[] tableOrderColumns = {"OrderId", "Confirmed", "Date", "Time"};
+    private String[] tableOrderColumns = {"OrderId", "Confirmed"};
     private String[] tableProductsColumns = {"", "1", "2"};
-    String[][] arr = {{"1", "2"}, {"3", "4"}};
 
-    private JTable tableOrders = new JTable(tm);
+    private JTable tableOrders;
+    private JTable tableProducts;
+
+    private String[][] test = {{"1","2"},{"3","4"}};
 
     private JLabel lblId = new JLabel("OrderId to delete");
     private JTextField tfId = new JTextField();
@@ -37,22 +37,28 @@ public class CustomerOrder extends JFrame implements ActionListener {
 
     private Controller controller;
 
-    public DefaultTableModel getTableModel() {
-        return tableModel;
-    }
 
-    
+    private DefaultTableModel defaultTm = new DefaultTableModel();
+
+
 
     public CustomerOrder(Controller controller){
         this.controller=controller;
         setLayout(new GridLayout(1,2));
 
-        pnlLeft.setLayout(new BorderLayout());
-        pnlRight.setLayout(new BorderLayout());
-        JScrollPane scrollPane = new JScrollPane(tableOrders);
-        pnlLeft.add(scrollPane,BorderLayout.CENTER);
-        setTableOrders(arr);
 
+        tableOrders = new JTable(test,tableOrderColumns); //ändra sen
+        tableOrders.setEnabled(false);
+
+        pnlLeft.setLayout(new BorderLayout());
+        pnlLeft.add(new JScrollPane(tableOrders), BorderLayout.CENTER);
+
+
+        pnlRight.setLayout(new BorderLayout());
+
+        pnlButtons.add(btnMenu);
+        pnlButtons.add(btnDelete);
+        pnlLeft.add(pnlButtons,BorderLayout.SOUTH);
 
 
 
@@ -60,28 +66,11 @@ public class CustomerOrder extends JFrame implements ActionListener {
         add(pnlRight);
         setSize(900,500);
         setVisible(true);
-                /*
 
-        tableOrders = new JTable(null,tableOrderColumns); //lägga till rader
-        tableOrders.setEnabled(false);
-
-
-
-                table= new JTable(controller.getProducts(), columnNames);
-        table.setEnabled(false);    //Makes table not editable
-        panelLeft.setLayout(new BorderLayout());
-        panelLeft.add(new JScrollPane(table), BorderLayout.CENTER);
-
-         */
 
 
     }
 
-    public void setTableOrders(String[][] array){
-        tm.setTableInfo(array);
-        tableOrders.setModel(tm);
-        tableOrders.repaint();
-    }
 
     public static void main(String[] args) {
         Connection.connect();
