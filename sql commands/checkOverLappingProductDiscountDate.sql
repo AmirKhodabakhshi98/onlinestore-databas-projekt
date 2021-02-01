@@ -7,13 +7,18 @@ create function checkDiscountDateOverlap
     returns bit
 as
 begin
-    declare @valid bit = 1;
 
-	if exists( select * from Product_discount
-	where [Product_id] = @productId
-	and @startDate <=  [End_date]
-	and @endDate >= [Start_date] )
-       set @valid = 0;
 
-    return @valid;
+    	if(@startDate>@endDate) return 0;
+
+    	if ((select count(*) from Product_discount
+    	where [Product_id] = @productId
+    	and @startDate <=  [End_date]
+    	and @endDate >= [Start_date]) > 1)
+           return 0;
+
+       
+
+    return 1;
+
 end
