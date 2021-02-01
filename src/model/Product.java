@@ -106,8 +106,6 @@ public class Product {
 
             String[][] prodArray = new String[getRows()][5];
 
-            ArrayList<String> arrayList = new ArrayList();
-
             for (int i=0; i<prodArray.length; i++){
                 res.next();
                 prodArray[i][0] = String.valueOf(res.getInt("Product_id"));
