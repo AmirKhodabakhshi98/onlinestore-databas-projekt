@@ -1,6 +1,12 @@
 CREATE PROCEDURE findOrderProductsByOrderId
-    @Order_id int
+
+	 @Order_id int
+
+
 AS
+
+
+
     SELECT Product.Name
     FROM Product
     WHERE Product_id = (

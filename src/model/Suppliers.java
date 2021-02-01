@@ -20,11 +20,20 @@ public class Suppliers {
 
     private static String query;
 
+
+
     //Sends query to add new supplier to db
     public static void addSupplier(String name, int phonenbr, String address){
-        query = "Insert into Supplier (Name, Phone_number, Address) " +
-                " values('" + name + "', " + phonenbr + ", '" + address + "');" ;
+
+
+
+        query = "EXEC addSupplier @Name = '" + name + "', @Phone_number = '" + phonenbr + "', @Address = '" +
+                address + "' " ;
 
         Connection.executeQueryNoResult(query);
+
+
+
     }
+
 }

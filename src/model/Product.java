@@ -54,14 +54,12 @@ public class Product {
     //Alter quantity of a product in db based on input id
     public static void editProductQuantity(int id, int quantity){
 
-        if (quantity>=0) {
 
-            query = "Update Product " +
-                    "Set Quantity = " + quantity +
-                    "Where Product_id = " + id;
+
+            query = "EXEC  ";
+
             Connection.executeQueryNoResult(query);
 
-        }else JOptionPane.showMessageDialog(null,"Quantity can't be negative");
 
     }
 
@@ -126,6 +124,8 @@ public class Product {
         return null;
 
     }
+
+
 
     public int getId() {
         return id;
