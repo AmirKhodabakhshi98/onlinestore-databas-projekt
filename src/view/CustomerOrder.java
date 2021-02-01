@@ -14,19 +14,17 @@ public class CustomerOrder extends JFrame implements ActionListener {
 
 
 
-    private MyTableModel tm = new MyTableModel();
-    private DefaultTableModel tableModel = new DefaultTableModel();
 
     private JTable tableProducts;
+    private JTable tableOrders;
 
     private JButton btnMenu = new JButton("Main Menu");
     private JButton btnDelete = new JButton("Delete Product");
+    private JButton btnGetProds = new JButton("Delete Product");
 
-    private String[] tableOrderColumns = {"OrderId", "Confirmed", "Date", "Time"};
-    private String[] tableProductsColumns = {"", "1", "2"};
+    private String[] tableOrderColumns = {"OrderId", "Confirmed"};
     String[][] arr = {{"1", "2"}, {"3", "4"}};
 
-    private JTable tableOrders = new JTable(tm);
 
     private JLabel lblId = new JLabel("OrderId to delete");
     private JTextField tfId = new JTextField();
@@ -37,11 +35,6 @@ public class CustomerOrder extends JFrame implements ActionListener {
 
     private Controller controller;
 
-    public DefaultTableModel getTableModel() {
-        return tableModel;
-    }
-
-    
 
     public CustomerOrder(Controller controller){
         this.controller=controller;
@@ -51,7 +44,6 @@ public class CustomerOrder extends JFrame implements ActionListener {
         pnlRight.setLayout(new BorderLayout());
         JScrollPane scrollPane = new JScrollPane(tableOrders);
         pnlLeft.add(scrollPane,BorderLayout.CENTER);
-        setTableOrders(arr);
 
 
 
@@ -75,12 +67,6 @@ public class CustomerOrder extends JFrame implements ActionListener {
          */
 
 
-    }
-
-    public void setTableOrders(String[][] array){
-        tm.setTableInfo(array);
-        tableOrders.setModel(tm);
-        tableOrders.repaint();
     }
 
     public static void main(String[] args) {
