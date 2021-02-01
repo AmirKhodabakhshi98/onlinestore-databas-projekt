@@ -33,8 +33,8 @@ public class AdminProductMenu extends JFrame implements ActionListener {
     private JTextField tfDeleteId = new JTextField();
 
 
-    private JButton btnEditMenu = new JButton("Edit menu");
-    private JButton btnDeleteMenu = new JButton("Delete menu");
+    private JButton btnEditMenu = new JButton("Edit Quantity");
+    private JButton btnDeleteMenu = new JButton("Delete Product");
     private JButton btnOrderMenu = new JButton("Order menu");
     private JButton btnDiscountMenu = new JButton("Discount menu");
     private JButton btnMainMenu = new JButton("Main menu");

@@ -32,8 +32,8 @@ public class AddProduct extends JPanel implements ActionListener{
         this.controller=controller;
         this.apm=apm;
         setLayout(new GridLayout(6,2));
-        add(lblId);
-        add(tfId);
+      //  add(lblId);
+     //   add(tfId);
         add(lblSupplier);
         add(tfSupplier);
         add(lblName);
