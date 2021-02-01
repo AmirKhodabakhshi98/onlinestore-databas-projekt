@@ -1,8 +1,9 @@
-CREATE TABLE Order (
-    Order_id int NOT NULL AUTO_INCREMENT,
-    Customer_id nvarchar(50) NOT NULL,
-    Confirmed BOOLEAN NOT NULL,
+CREATE TABLE [Order] (
+    Order_id int NOT NULL IDENTITY(1,1),
+    Username nvarchar(50) NOT NULL FOREIGN KEY REFERENCES Customer(Username),
+    Confirmed bit NOT NULL,
     Date DATETIME NOT NULL,
-    PRIMARY KEY (Order_id)
-    FOREIGN KEY (Customer_id REFERENCES Customer(Customer_id))
+    PRIMARY KEY (Order_id),
+
 )
+

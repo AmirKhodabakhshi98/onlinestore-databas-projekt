@@ -6,7 +6,6 @@ import view.*;
 import java.sql.*;
 
 
-
 public class Connection {
 
     private static java.sql.Connection conn;
@@ -103,6 +102,8 @@ public class Connection {
         System.out.println("admin login failed");
         return false;
     }
+
+
 
     //Method for checking if a customers account exist in the database.
     public static boolean connectCustomer(String username, String password){
