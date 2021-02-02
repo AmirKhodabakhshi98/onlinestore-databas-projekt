@@ -1,0 +1,10 @@
+CREATE procedure searchProductPrice
+
+@Price int
+
+as
+
+
+select [Base_price] from [dbo].[Product]
+where [Base_price] = @Price
+go

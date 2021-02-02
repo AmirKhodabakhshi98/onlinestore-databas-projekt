@@ -1,0 +1,10 @@
+CREATE procedure searchNameProduct
+
+@Name nvarchar(50)
+
+as
+
+
+select [Name] from [dbo].[Product]
+where [Name] = @Name
+go
