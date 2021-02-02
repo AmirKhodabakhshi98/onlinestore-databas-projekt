@@ -2,6 +2,7 @@ package view;
 
 import controllers.Controller;
 import database.Connection;
+import model.Discount;
 import model.Product;
 
 import javax.swing.*;
@@ -24,9 +25,11 @@ public class AdminDiscount extends JFrame implements ActionListener {
     private JLabel lblDescription = new JLabel("Description");
     private JLabel lblPercentage = new JLabel("Discount %");
     private JLabel lblProductId = new JLabel("Product ID");
-    private JLabel lblStartDate = new JLabel("First day");
-    private JLabel lblEndDate = new JLabel("Last day");
+    private JLabel lblStartDate = new JLabel("Start YYYY-MM-DD HH:MI:SS");
+    private JLabel lblEndDate = new JLabel("End YYYY-MM-DD HH:MI:SS");
     private JLabel lblEmpty = new JLabel("");
+
+
 
     private JTextField tfDiscountId = new JTextField();
     private JTextField tfProductId = new JTextField();
@@ -126,14 +129,26 @@ public class AdminDiscount extends JFrame implements ActionListener {
         }
         if (e.getSource()==btnSeeDisc){
             //functionality to see all discounts
+
+
+
+
         }
         if (e.getSource()==btnSeeProd){
             //functionality to see all products w discount
+
+
+
         }
+
+
+
+
         if (e.getSource()==btnNewDiscount){
             try{
                 int x = Integer.parseInt(tfPercentage.getText());
-                //functionality to create new discotun
+
+                Discount.addDiscounts(tfDescription.getText(), Integer.parseInt(tfPercentage.getText()));
 
                 tfDescription.setText(null);
                 tfPercentage.setText(null);
@@ -150,7 +165,12 @@ public class AdminDiscount extends JFrame implements ActionListener {
             try{
                 int x = Integer.parseInt(tfProductId.getText());
                 x = Integer.parseInt(tfDiscountId.getText());
-                //functionality to add discount to product
+
+
+                Discount.addProductDiscount(Integer.parseInt(tfProductId.getText()), Integer.parseInt(tfDiscountId.getText()),
+                        tfStart.getText(), tfEnd.getText());
+
+
 
                 tfProductId.setText(null);
                 tfDiscountId.setText(null);

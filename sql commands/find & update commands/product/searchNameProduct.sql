@@ -5,6 +5,6 @@ CREATE procedure searchNameProduct
 as
 
 
-select [Name] from [dbo].[Product]
+select * from [dbo].[Product]
 where [Name] = @Name
 go

@@ -72,7 +72,7 @@ public class AddProduct extends JPanel implements ActionListener{
               tfPrice.setText(null);
               tfQuantity.setText(null);
               tfQuantity.setText(null);
-              apm.updateTable();
+              apm.updateTable(Product.getAllProducts());
 
           }
 

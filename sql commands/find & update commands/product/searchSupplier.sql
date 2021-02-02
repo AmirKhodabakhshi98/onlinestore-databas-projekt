@@ -5,6 +5,6 @@ CREATE procedure searchSupplier
 as
 
 
-select [Supplier_name] from [dbo].[Product]
+select * from [dbo].[Product]
 where [Supplier_name] = @Supplier_name
 go

@@ -1,0 +1,7 @@
+CREATE PROCEDURE getAdmins
+
+AS
+
+   SELECT * FROM Admin
+
+GO

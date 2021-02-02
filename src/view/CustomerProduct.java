@@ -1,6 +1,7 @@
 package view;
 
 import controllers.Controller;
+import model.Product;
 
 import javax.swing.*;
 import java.awt.*;
@@ -42,7 +43,7 @@ public class CustomerProduct extends JFrame implements ActionListener {
         northPanel.setBackground(Color.white);
         searchBtn.setBounds(20,60,110,30);
         keyWrdTxf.setPreferredSize(new Dimension(110,20));
-        prodTable = new JTable(controller.getProducts(), columnNames);
+        prodTable = new JTable(Product.getAllProducts(), columnNames);
         prodTable.setEnabled(false);
         add(northPanel, BorderLayout.NORTH);
         add(centerPnl, BorderLayout.CENTER);

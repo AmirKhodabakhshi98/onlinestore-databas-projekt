@@ -5,6 +5,6 @@ CREATE procedure searchProductPrice
 as
 
 
-select [Base_price] from [dbo].[Product]
+select * from [dbo].[Product]
 where [Base_price] = @Price
 go

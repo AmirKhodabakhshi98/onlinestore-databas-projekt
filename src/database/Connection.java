@@ -77,16 +77,14 @@ public class Connection {
     public static boolean connectAdmin(String username, String password) {
         try {
 
-            String getAdmins =
-                    "Select Username, Password " +
-                            " FROM Admin"; //
+            String getAdmins = "EXEC getAdmins";
 
             ResultSet res = executeQueryWithResult(getAdmins);
 
 
             while (res.next()) {
 
-                String user = res.getNString("Username"); //ändra eventuellt kolumnnamn...
+                String user = res.getNString("Email");
                 String pw = res.getNString("Password");
 
                 if (user.equals(username) && pw.equals(password)) {
@@ -111,9 +109,7 @@ public class Connection {
 
         try {
 
-        String getUsers =
-                "Select Username, Password " +
-                        " FROM Customer";
+        String getUsers = "EXEC getCustomerLogin";
 
                  ResultSet res = executeQueryWithResult(getUsers);
 
