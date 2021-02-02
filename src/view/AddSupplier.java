@@ -2,6 +2,7 @@ package view;
 
 import javax.swing.*;
 import controllers.Controller;
+import model.Suppliers;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -50,7 +51,7 @@ public class AddSupplier extends JFrame {
     //Sends input data to controller in order to add new supplier to db
     private void addSupplier(){
 
-        controller.newSupplier(tfName.getText(), Integer.parseInt(tfNbr.getText()), tfAddress.getText());
+        Suppliers.addSupplier(tfName.getText(), Integer.parseInt(tfNbr.getText()), tfAddress.getText());
         clearFields();
 
     }

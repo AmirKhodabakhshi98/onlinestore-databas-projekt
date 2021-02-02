@@ -1,6 +1,8 @@
 package view;
 
 import controllers.Controller;
+import model.Orders;
+import model.Product;
 
 import javax.swing.*;
 import java.awt.*;
@@ -33,7 +35,7 @@ public class AdminOrder extends JFrame implements ActionListener {
         String[] test = {"1","true","idag","förra timmen"};
         String[][] test2 = new String[1][];
         test2[0]= test;
-        table = new JTable(test2,columnNames); //lägga in orders här
+        table = new JTable(Orders.UnconfirmedOrders(),columnNames); //lägga in orders här
         table.setEnabled(false);
         add(new JScrollPane(table),BorderLayout.CENTER);
 
@@ -56,8 +58,9 @@ public class AdminOrder extends JFrame implements ActionListener {
 
     //Method to refresh the table
     private void updateTable(){
+
         this.getContentPane().remove(table);
-        table= new JTable(controller.getProducts(), columnNames);
+        table= new JTable(Orders.UnconfirmedOrders(), columnNames);
         add(new JScrollPane(table), BorderLayout.CENTER);
         revalidate();
 

@@ -10,3 +10,4 @@ AS
     Set Quantity = @Quantity
     Where Product_id = @Product_id
 GO
+

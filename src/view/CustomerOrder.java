@@ -2,6 +2,7 @@ package view;
 
 import controllers.Controller;
 import database.Connection;
+import model.Orders;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,7 +27,7 @@ public class CustomerOrder extends JFrame implements ActionListener {
     private JTextField tfDelete = new JTextField();
 
 
-    private String[] tableOrderColumns = {"OrderId", "Confirmed", "Datetime"};
+    private String[] tableOrderColumns = {"OrderId", "Username", "Confirmed", "Datetime"};
     private String[] tableProductsColumns = {"ProductId", "Confirmed", "Datetime"};
 
 
@@ -48,7 +49,7 @@ public class CustomerOrder extends JFrame implements ActionListener {
         pnlLeft.setLayout(new BorderLayout());
         pnlRight.setLayout(new BorderLayout());
 
-        tableOrders = new JTable(arr,tableOrderColumns); //ändra här
+        tableOrders = new JTable(controller.getUserOrders(),tableOrderColumns); //ändra här
         tableOrders.setEnabled(false);
         pnlLeft.add(new JScrollPane(tableOrders),BorderLayout.CENTER);
 
@@ -79,9 +80,9 @@ public class CustomerOrder extends JFrame implements ActionListener {
 
     }
 
-    public void updateProductTable(){  //hämta elr mata in???????????
+    public void updateProductTable(String[][] arr){  //hämta elr mata in???????????
         this.getContentPane().remove(tableProducts);
-        tableProducts= new JTable(); //hämta elr mata in?
+        tableProducts= new JTable(arr, tableProductsColumns); //hämta elr mata in?
         pnlLeft.add(new JScrollPane(tableProducts));
         revalidate();
 
@@ -102,15 +103,21 @@ public class CustomerOrder extends JFrame implements ActionListener {
             new CustomerMainMenu(controller);
         }
 
+
         if (e.getSource()==btnGetProds){
-            //
+            int id = Integer.parseInt(tfProds.getText());
+
+            updateProductTable(Orders.findOrderProductsByOrderId(id)); //retrieves product array based on order ID and furthers it to
+                                                                        // the right table
 
             tfProds.setText(null);
         }
 
         if (e.getSource()==btnDelete){
-            //
 
+            int id = Integer.parseInt(tfDelete.getText());
+
+            Orders.deleteOrder(id);
 
             tfDelete.setText(null);
         }

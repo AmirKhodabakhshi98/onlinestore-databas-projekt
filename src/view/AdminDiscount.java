@@ -2,6 +2,7 @@ package view;
 
 import controllers.Controller;
 import database.Connection;
+import model.Product;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -85,7 +86,7 @@ public class AdminDiscount extends JFrame implements ActionListener {
         pnlRightBottom.setBorder(borderRightBottom);
 
 
-        table= new JTable(controller.getProducts(), columnNames);
+        table= new JTable(Product.getAllProducts(), columnNames);
         table.setEnabled(false);    //Makes table not editable
 
         pnlLeft.setLayout(new BorderLayout());

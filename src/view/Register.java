@@ -1,6 +1,7 @@
 package view;
 
 import controllers.Controller;
+import model.Customer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,6 +31,7 @@ public class Register extends JFrame {
     private JTextField tfPw = new JTextField();
 
     private JButton buttonRegister = new JButton("Register");
+    private JButton buttonLogin = new JButton("Open Login Screen");
 
     private Controller controller;
 
@@ -60,9 +62,11 @@ public class Register extends JFrame {
         add(lblAddress);
         add(tfAddress);
         add(buttonRegister);
+        add(buttonLogin);
 
         actionListener al = new actionListener();
         buttonRegister.addActionListener(al);
+        buttonLogin.addActionListener(al);
 
         setVisible(true);
 
@@ -70,24 +74,34 @@ public class Register extends JFrame {
 
     //Takes input values and sends to controller for registering user
     private void register(){
-        controller.registerCustomer(
-            tfFirstN.getText(),
-            tfLastN.getText(),
-            tfEmail.getText(),
-            tfUser.getText(),
-            tfPw.getText(),
-            Integer.parseInt(tfNbr.getText()),
-            tfCountry.getText(),
-            tfCity.getText(),
-            tfAddress.getText()
-        );
+        Customer.registerCustomer(tfFirstN.getText(),
+                tfLastN.getText(),
+                tfEmail.getText(),
+                tfUser.getText(),
+                tfPw.getText(),
+                Integer.parseInt(tfNbr.getText()),
+                tfCountry.getText(),
+                tfCity.getText(),
+                tfAddress.getText());
 
-        this.dispose();
-        new LogIn(controller);
+
+        tfFirstN.setText(null);
+        tfLastN.setText(null);
+        tfEmail.setText(null);
+        tfUser.setText(null);
+        tfPw.setText(null);
+        tfNbr.setText(null);
+        tfCity.setText(null);
+        tfCountry.setText(null);
+        tfAddress.setText(null);
 
     }
 
 
+    private void login(){
+        this.dispose();
+        new LogIn(controller);
+    }
 
 /*
     private void clearTextfield(){
@@ -120,6 +134,9 @@ public class Register extends JFrame {
                     JOptionPane.showMessageDialog(null,"Phonenumber must be integers only");
                 }
                 }
+            if (e.getSource()==buttonLogin){
+                login();
+            }
 
 
 
