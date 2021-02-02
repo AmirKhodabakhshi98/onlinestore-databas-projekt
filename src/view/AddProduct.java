@@ -1,6 +1,7 @@
 package view;
 
 import controllers.Controller;
+import model.Product;
 
 import javax.swing.*;
 import java.awt.*;
@@ -51,8 +52,7 @@ public class AddProduct extends JPanel implements ActionListener{
     }
 
     private void addProduct(){
-        controller.addProduct(
-                Integer.parseInt(tfId.getText()),
+        Product.addProduct(
                 tfSupplier.getText(),
                 tfName.getText(),
                 Integer.parseInt(tfPrice.getText()),

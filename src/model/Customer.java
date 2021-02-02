@@ -8,6 +8,8 @@ import java.sql.SQLException;
 
 public class Customer {
 
+    private static String query;
+
 
     public String firstName;
     public String lastName;
@@ -41,6 +43,7 @@ public class Customer {
         this.streetAddress = streetAddress;
     }
 
+
     public static void insertOne(Customer customer) {
 
         Connection.executeQueryNoResult(
@@ -69,8 +72,38 @@ public class Customer {
         );
     }
 
+    public static void registerCustomer(String fName, String lName, String email, String user, String pw, int PhoneNbr,
+                                        String country, String city, String address){
 
+        query = "EXEC addCustomer @FirstName = '" + fName + "', @LastName = '" + lName + "', @Email = '" + email
+                 + "', @Phone_number = " + PhoneNbr + ", @Country = '" + country + "', @City = '" + city + "', " +
+                "@Street_address = '" + address + "', @Username = '" + user + "', @Password = '" + pw + "'";
+
+        Connection.executeQueryNoResult(query);
+
+    }
+
+
+
+    //vad ska den returnera?
+    public static void findCustomerByUserName(String username){
+
+        query = "EXEC findCustomerByUsername @Username = '" + username + "'";
+
+        ResultSet res = Connection.executeQueryWithResult(query);
+
+    }
+
+
+
+
+
+
+
+
+    
     public static Customer findByUsername(String username) throws SQLException {
+
 
         ResultSet resultSet = Connection.executeQueryWithResult(
             "SELECT *" +

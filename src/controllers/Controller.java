@@ -2,19 +2,26 @@ package controllers;
 
 import database.Connection;
 import model.Customer;
+import model.Orders;
 import model.Product;
 import model.Suppliers;
 import view.*;
 
 import javax.swing.*;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 
 public class Controller {
 
 
+    private String username;
 
 
     //Logging in a customer
     public void customerLogin(String user, String pw){
+
+        this.username=user; //saves username to retreieve customer specific information later like their orders
 
         boolean loggedIn = Connection.connectCustomer(user,pw);
 
@@ -29,6 +36,7 @@ public class Controller {
 
     }
 
+
     //Logging in an admin
     public void adminLogin(String user, String pw){
 
@@ -42,48 +50,48 @@ public class Controller {
             JOptionPane.showMessageDialog(null,"Invalid username and/or password");
             new StartingMenu(this);
         }
-
-
-    }
-
-    //Creates new customer row in db
-    public void registerCustomer(String fName, String lName, String email, String user, String pw, int nbr,
-                                 String country, String city, String address){
-
-        Customer customer = new Customer( fName, lName, email,user,pw, nbr, country, city, address);
-        Customer.insertOne(customer);
-
-    }
-
-    public void addProduct(int id, String supplier, String name, int price, int quantity){
-
-        Product.addProduct(id,supplier,name,price,quantity);
-
-    }
-
-    public void editProduct(int id, int quantity){
-        Product.editProductQuantity(id,quantity);
-
-
-    }
-
-    public void deleteProduct(int id){
-        Product.deleteProduct(id);
-    }
-
-    //Adds new supplier to db
-    public void newSupplier(String name, int nbr, String address){
-
-        Suppliers.addSupplier(name, nbr, address);
-
-    }
-
-    //retrieves and returns arraylist of all products in db
-    public String[][] getProducts(){
-        return Product.getAllProducts();
     }
 
 
+    //Converts a Resultset object into a 2d array that can be used in JTables
+    public static String[][] resultSetToArray(ResultSet res){
 
+        try {
+
+            ResultSetMetaData metaData = res.getMetaData(); //Metadata is to get information about resultset columns
+            int columnCount = metaData.getColumnCount(); //gets the number of columns
+
+            res.last(); //moves cursor to last row
+            int rows = res.getRow(); //gets number of the last row, i.e row count
+
+            String[][] prodArray = new String[rows][columnCount]; //intializes array based on resultset rows/cols
+
+            res.first(); //moves cursor to first row
+
+            for (int i=0; i<rows; i++){
+
+                for (int j= 0 ; j<columnCount; j++){
+                    prodArray[i][j] = res.getString(j+1);
+                }
+
+                res.next(); //moves pointer to next row
+            }
+
+            return prodArray;
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+
+    //relays customers orders based on the stored username
+    public String[][] getUserOrders(){
+
+        return Orders.findOrdersByUsername(username);
+
+    }
 
 }

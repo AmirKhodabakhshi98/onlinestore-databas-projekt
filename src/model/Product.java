@@ -1,9 +1,12 @@
 package model;
 
+import controllers.Controller;
 import database.Connection;
 
+import javax.naming.ldap.Control;
 import javax.swing.*;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -28,27 +31,14 @@ public class Product {
 
 
 
-    //Sends query to db to add new product row
-    public static void addProduct(Product product){
+    public static void addProduct( String supplier, String name, int price, int quantity){
 
-        query =  "Insert into Product (Product_id, Supplier_name, Name, Base_price, Quantity) " +
-                "values (" + product.id + ", '" + product.supplier + "', '" + product.name + "', " + product.price + ", "
-                + product.quantity  + ");";
+        query = "EXEC addProduct @Supplier_name = '" + supplier + "', @Name = '" + name + "', @Base_price = " +
+                price + ", @Quantity = " + quantity;
 
         Connection.executeQueryNoResult(query);
 
     }
-
-    public static void addProduct(int id, String supplier, String name, int price, int quantity){
-
-        query = "Insert into Product (Product_id, Supplier_name, Name, Base_price, Quantity) " +
-                "values (" + id + ", '" + supplier + "', '" + name + "', " + price + ", "
-                + quantity  + ");";
-
-        Connection.executeQueryNoResult(query);
-
-    }
-
 
 
     //Alter quantity of a product in db based on input id
@@ -56,7 +46,7 @@ public class Product {
 
 
 
-            query = "EXEC  ";
+            query = "EXEC setProductQuantity @Product_id = '" + id + "', @Quantity = '" + quantity + "'";
 
             Connection.executeQueryNoResult(query);
 
@@ -66,11 +56,12 @@ public class Product {
     //Delete a product in db based on input id
     public static void deleteProduct(int id){
 
-        query = "Delete from Product " +
-                "Where Product_id = " + id;
+        query = "EXEC deleteProduct @Product_id = " + id;
 
         Connection.executeQueryNoResult(query);
     }
+
+
 
 
     //returns number of products in db
@@ -97,13 +88,20 @@ public class Product {
 
     //Returns an array of representing all products stored in the database
     public static String[][] getAllProducts(){
-        try {
+
 
             query = "Select * from Product";
+
             ResultSet res = Connection.executeQueryWithResult(query);   // returns all products
 
-            String[][] prodArray = new String[getRows()][5];
+            return Controller.resultSetToArray(res);
 
+    }
+
+}
+
+
+            /*
             for (int i=0; i<prodArray.length; i++){
                 res.next();
                 prodArray[i][0] = String.valueOf(res.getInt("Product_id"));
@@ -113,38 +111,5 @@ public class Product {
                 prodArray[i][4] = String.valueOf(res.getInt("Quantity"));
             }
 
-
-
-            return prodArray;
-
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
-
-        return null;
-
-    }
-
-
-
-    public int getId() {
-        return id;
-    }
-
-    public String getSupplier() {
-        return supplier;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getPrice() {
-        return price;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-}
+             */
 

@@ -3,6 +3,7 @@ package database;
 import controllers.Controller;
 import view.*;
 
+import javax.swing.*;
 import java.sql.*;
 
 
@@ -45,11 +46,11 @@ public class Connection {
 
         try {
 
-             statement = conn.createStatement();
+             statement = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
             res = statement.executeQuery(query);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,e.getMessage());
         }
 
             return res;
@@ -66,7 +67,7 @@ public class Connection {
             statement.executeUpdate(query);
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null,e.getMessage());
         }
 
     }
@@ -140,8 +141,9 @@ public class Connection {
     public static void main(String[] args) {
         connect();
         Controller controller = new Controller();
+
      //   new StartingMenu(controller);
-        new AdminProductMenu(controller);
+       new AdminProductMenu(controller);
      //     new CustomerMainMenu(controller);
 
 

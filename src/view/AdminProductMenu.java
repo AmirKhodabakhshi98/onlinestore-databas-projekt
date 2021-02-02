@@ -1,6 +1,7 @@
 package view;
 
 import controllers.Controller;
+import model.Product;
 
 import javax.swing.*;
 import java.awt.*;
@@ -56,7 +57,8 @@ public class AdminProductMenu extends JFrame implements ActionListener {
         setLayout(new GridLayout(1,2));
 
 
-        table= new JTable(controller.getProducts(), columnNames);
+
+        table= new JTable(Product.getAllProducts(), columnNames);
         table.setEnabled(false);    //Makes table not editable
         panelLeft.setLayout(new BorderLayout());
         panelLeft.add(new JScrollPane(table), BorderLayout.CENTER);
@@ -110,7 +112,7 @@ public class AdminProductMenu extends JFrame implements ActionListener {
 
     public void updateTable(){
         this.getContentPane().remove(table);
-        table= new JTable(controller.getProducts(), columnNames);
+        table= new JTable(Product.getAllProducts(), columnNames);
         panelLeft.add(new JScrollPane(table), BorderLayout.CENTER);
         revalidate();
 
@@ -126,7 +128,7 @@ public class AdminProductMenu extends JFrame implements ActionListener {
             }
 
             if (e.getSource()==btnEdit){
-                controller.editProduct(Integer.parseInt(tfEditId.getText()),Integer.parseInt(tfQuantity.getText()));
+                Product.editProductQuantity(Integer.parseInt(tfEditId.getText()),Integer.parseInt(tfQuantity.getText()));
                 tfEditId.setText(null);
                 tfQuantity.setText(null);
                 updateTable();
@@ -137,7 +139,7 @@ public class AdminProductMenu extends JFrame implements ActionListener {
             }
 
             if (e.getSource()==btnDelete){
-                controller.deleteProduct(Integer.parseInt(tfDeleteId.getText()));
+                Product.deleteProduct(Integer.parseInt(tfDeleteId.getText()));
                 tfDeleteId.setText(null);
                 updateTable();
             }

@@ -14,6 +14,7 @@ public class AdminMenu extends JFrame implements ActionListener{
     private JButton btnProductPage = new JButton("Product Menu");
     private JButton btnOrderPage = new JButton("Orders Menu");
     private JButton btnDiscountPage = new JButton("Discount Menu");
+    private JButton btnLogOut = new JButton("Log out");
 
     //Main menu for admin
     public AdminMenu(Controller controller){
@@ -27,11 +28,13 @@ public class AdminMenu extends JFrame implements ActionListener{
         add(btnProductPage);
         add(btnOrderPage);
         add(btnDiscountPage);
+        add(btnLogOut);
 
         btnAddSupplier.addActionListener(this);
         btnProductPage.addActionListener(this);
         btnOrderPage.addActionListener(this);
         btnDiscountPage.addActionListener(this);
+        btnLogOut.addActionListener(this);
 
         setLocationRelativeTo(null);
         setVisible(true);
@@ -56,6 +59,10 @@ public class AdminMenu extends JFrame implements ActionListener{
             if (e.getSource()==btnDiscountPage){
                 this.dispose();
                 new AdminDiscount(controller);
+            }
+            if (e.getSource()==btnLogOut){
+                this.dispose();
+                new StartingMenu(controller);
             }
 
         }
