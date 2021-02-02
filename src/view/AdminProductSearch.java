@@ -1,6 +1,7 @@
 package view;
 
 import controllers.Controller;
+import model.Product;
 
 import javax.swing.*;
 import java.awt.*;
@@ -51,23 +52,29 @@ public class AdminProductSearch extends JPanel implements ActionListener {
     //uppdatera med metoder när de finns
     public void actionPerformed(ActionEvent e) {
         if (e.getSource()==btnSearch){
+
+
             if (rbName.isSelected()){
                 JOptionPane.showMessageDialog(null,"name");
                 //kalla metod här
-                apm.updateTable(); //fylla in med returdata här
+                apm.updateTable(Product.getAllProducts()); //fylla in med returdata här
                 tfKeyword.setText(null);
             }
             else if (rbId.isSelected()){
+
+
                 JOptionPane.showMessageDialog(null,"id");
                 //kalla metod här
-                apm.updateTable(); //fylla in med returdata här
+                apm.updateTable(Product.getAllProducts()); //fylla in med returdata här
                 tfKeyword.setText(null);
 
             }
             else if (rbSupplier.isSelected()){
-                JOptionPane.showMessageDialog(null,"supply");
-                //kalla metod här
-                apm.updateTable(); //fylla in med returdata här
+
+
+
+                apm.updateTable(Product.searchProductOnSupplier(tfKeyword.getText()));
+
                 tfKeyword.setText(null);
             }
             else JOptionPane.showMessageDialog(null, "Please select a button");

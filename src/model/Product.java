@@ -63,40 +63,30 @@ public class Product {
 
 
 
-
-    //returns number of products in db
-    public static int getRows(){
-
-        query = "Select count(Product_id)  " +
-                "from Product ";
-
-        ResultSet res = Connection.executeQueryWithResult(query);
-
-        int rows = 0;
-
-        try {
-
-            res.next(); //Moves cursor to first row
-             rows = res.getInt(1);  //retrieves count value
-
-
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return rows;
-    }
-
     //Returns an array of representing all products stored in the database
     public static String[][] getAllProducts(){
 
 
-            query = "Select * from Product";
+            query = "EXEC getProducts";
 
             ResultSet res = Connection.executeQueryWithResult(query);   // returns all products
 
             return Controller.resultSetToArray(res);
 
     }
+
+
+    public static String[][] searchProductOnSupplier(String keyword){
+
+        query = "EXEC searchSupplier @Supplier_name = '" + keyword + "'";
+
+        ResultSet res = Connection.executeQueryWithResult(query);
+
+        return Controller.resultSetToArray(res);
+
+    }
+
+
 
 }
 

@@ -87,6 +87,13 @@ public class Controller {
     }
 
 
+    public static String[] getColumnNames(){
+
+
+        return null;
+    }
+
+
     //relays customers orders based on the stored username
     public String[][] getUserOrders(){
 

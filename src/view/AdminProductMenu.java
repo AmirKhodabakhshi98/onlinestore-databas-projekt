@@ -110,9 +110,9 @@ public class AdminProductMenu extends JFrame implements ActionListener {
         revalidate();
     }
 
-    public void updateTable(){
+    public void updateTable(String[][] arr){
         this.getContentPane().remove(table);
-        table= new JTable(Product.getAllProducts(), columnNames);
+        table= new JTable(arr, columnNames);
         panelLeft.add(new JScrollPane(table), BorderLayout.CENTER);
         revalidate();
 
@@ -131,7 +131,7 @@ public class AdminProductMenu extends JFrame implements ActionListener {
                 Product.editProductQuantity(Integer.parseInt(tfEditId.getText()),Integer.parseInt(tfQuantity.getText()));
                 tfEditId.setText(null);
                 tfQuantity.setText(null);
-                updateTable();
+                updateTable(Product.getAllProducts());
             }
 
             if (e.getSource()==btnDeleteMenu){
@@ -141,7 +141,7 @@ public class AdminProductMenu extends JFrame implements ActionListener {
             if (e.getSource()==btnDelete){
                 Product.deleteProduct(Integer.parseInt(tfDeleteId.getText()));
                 tfDeleteId.setText(null);
-                updateTable();
+                updateTable(Product.getAllProducts());
             }
 
             if (e.getSource()==btnMainMenu){
@@ -153,6 +153,7 @@ public class AdminProductMenu extends JFrame implements ActionListener {
                 updatePanel(pnlAddProduct);
             }
             if (e.getSource()==btnSearch){
+
                 updatePanel(pnlAdminProductSearch);
             }
             if (e.getSource()==btnMaxOrder){
