@@ -83,6 +83,7 @@ public class AdminProductMenu extends JFrame implements ActionListener {
         btnMainMenu.addActionListener(this);
         btnAddProduct.addActionListener(this);
         btnSearch.addActionListener(this);
+        btnAllProd.addActionListener(this);
 
      //   panelRight.setLayout(new GridLayout(1,1));
         panelRight.setLayout(new BorderLayout());
@@ -161,7 +162,7 @@ public class AdminProductMenu extends JFrame implements ActionListener {
 
            }
             if (e.getSource()==btnAllProd){
-                //command here
+                updateTable(Product.getAllProducts());
             }
 
 

@@ -86,6 +86,35 @@ public class Product {
 
     }
 
+    public static String[][] searchProductOnPrice(int keyword){
+
+        query = "EXEC searchProductPrice @Price = " + keyword;
+
+        ResultSet res = Connection.executeQueryWithResult(query);
+
+        return Controller.resultSetToArray(res);
+
+    }
+
+    public static String[][] searchProductOnName(String keyword){
+
+        query = "EXEC searchNameProduct @Name = '" + keyword + "'";
+
+        ResultSet res = Connection.executeQueryWithResult(query);
+
+        return Controller.resultSetToArray(res);
+
+    }
+
+
+    public static String[][] searchProductOnId (int price){
+        query = "EXEC searchProductId @Id = " + price + "";
+
+        ResultSet res = Connection.executeQueryWithResult(query);
+
+        return Controller.resultSetToArray(res);
+    }
+
 
 
 }

@@ -55,17 +55,17 @@ public class AdminProductSearch extends JPanel implements ActionListener {
 
 
             if (rbName.isSelected()){
-                JOptionPane.showMessageDialog(null,"name");
-                //kalla metod här
-                apm.updateTable(Product.getAllProducts()); //fylla in med returdata här
+
+
+                apm.updateTable(Product.searchProductOnName(tfKeyword.getText())); //fylla in med returdata här
                 tfKeyword.setText(null);
+
+
             }
             else if (rbId.isSelected()){
 
 
-                JOptionPane.showMessageDialog(null,"id");
-                //kalla metod här
-                apm.updateTable(Product.getAllProducts()); //fylla in med returdata här
+                apm.updateTable(Product.searchProductOnId(Integer.parseInt(tfKeyword.getText()))); //fylla in med returdata här
                 tfKeyword.setText(null);
 
             }
