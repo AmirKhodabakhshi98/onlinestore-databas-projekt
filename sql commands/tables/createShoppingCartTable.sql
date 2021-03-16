@@ -1,0 +1,7 @@
+CREATE TABLE Shopping_cart (
+
+    ID int NOT NULL IDENTITY(1,1),
+    Username nvarchar(50) NOT NULL FOREIGN KEY REFERENCES Customer(Username),
+    CreatedDate DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (ID)
+)
