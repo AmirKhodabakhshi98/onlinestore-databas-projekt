@@ -84,6 +84,7 @@ public class AdminProductMenu extends JFrame implements ActionListener {
         btnAddProduct.addActionListener(this);
         btnSearch.addActionListener(this);
         btnAllProd.addActionListener(this);
+        btnMaxOrder.addActionListener(this);
 
      //   panelRight.setLayout(new GridLayout(1,1));
         panelRight.setLayout(new BorderLayout());
@@ -158,7 +159,7 @@ public class AdminProductMenu extends JFrame implements ActionListener {
                 updatePanel(pnlAdminProductSearch);
             }
             if (e.getSource()==btnMaxOrder){
-                //command here
+                new MaxMonthlyOrders();
 
            }
             if (e.getSource()==btnAllProd){
@@ -166,9 +167,10 @@ public class AdminProductMenu extends JFrame implements ActionListener {
             }
 
 
-
-
         }
+
+
+
 
 
     private class DeletePanel extends JPanel {

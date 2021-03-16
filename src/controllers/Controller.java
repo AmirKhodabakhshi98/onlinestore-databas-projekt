@@ -87,9 +87,30 @@ public class Controller {
     }
 
 
-    public static String[] getColumnNames(){
+    //Returns columnnames of a result set as an array so it can be used in JTAble
+    public static String[] getColumnNames(ResultSet res){
 
+        try {
 
+            ResultSetMetaData metaData = null;
+
+            metaData = res.getMetaData();
+
+            int columns = metaData.getColumnCount();
+
+            String[] colunmArray = new String[columns];
+
+            for (int i=0; i<columns; i++){
+
+                colunmArray[i] = metaData.getColumnName(i+1); //+1 else it would start by pointing at 0th col whilst table starts at col 1, etc
+
+            }
+
+            return colunmArray;
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
         return null;
     }
 

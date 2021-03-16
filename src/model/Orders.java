@@ -48,4 +48,17 @@ public class Orders {
         return Controller.resultSetToArray(res);
     }
 
+    public static Object[] maxMonthlyOrder(){
+        Object[] returnData = new Object[2];
+
+        String query = "EXEC maxMonthlyOrder";
+
+        ResultSet res = Connection.executeQueryWithResult(query);
+
+        returnData[0] = Controller.resultSetToArray(res);
+        returnData[1] = Controller.getColumnNames(res);
+
+        return returnData;
+
+    }
 }
