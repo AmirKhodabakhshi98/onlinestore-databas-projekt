@@ -49,4 +49,3 @@ CREATE PROCEDURE purchase
 			END CATCH
 
 	GO
-	

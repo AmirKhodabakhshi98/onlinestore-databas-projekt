@@ -9,15 +9,14 @@ import java.sql.*;
 
 public class Connection {
 
+    public static String globalUsername; //so users username can be accessed from rest of program
+
     private static java.sql.Connection conn;
     private static Statement statement;
   //  private ResultSet res;
 
     //Constructor that connects to the msql database online server
     public static void connect(){
-
-        //komma ihåg att använda conn.close, statement.close senare när vi vet hur d ska hanteras?
-        //uppdatera logic för failed/connected lite
 
         String user = "sa";
         String password = "secret";
@@ -113,14 +112,15 @@ public class Connection {
 
                  ResultSet res = executeQueryWithResult(getUsers);
 
-
                 while (res.next()){
 
                     String user = res.getNString("Username");
                     String pw = res.getNString("Password");
 
+                    //checks if username and password match database records
                     if (user.equals(username) && pw.equals(password)){
                         System.out.println("Costumer logged in");
+                        globalUsername = username;
                         return true;
                     }
                 }

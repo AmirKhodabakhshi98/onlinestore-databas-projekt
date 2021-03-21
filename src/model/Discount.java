@@ -29,25 +29,13 @@ public class Discount {
         Connection.executeQueryNoResult(query);
     }
 
+
+
+    //See discount history for a product
     public static void seeDiscountHistory(int id){
         String  query = "EXEC seeDiscountHistoryForAProduct @Product_id = " + id;
 
                 Connection.executeQueryWithResult(query);
-    }
-
-
-
-
-
-
-    public void discountToProductDate(Product product, int date){
-
-    this.product = product;
-    this.date = date;
-    }
-
-    public void discountHistory(){
-
     }
 
 

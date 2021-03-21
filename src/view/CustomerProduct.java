@@ -23,12 +23,13 @@ public class CustomerProduct extends JFrame implements ActionListener {
     private JTextField keyWrdTxf = new JTextField();
     private JButton searchBtn = new JButton("Search");
     private ButtonGroup group;
+    private JButton menuBtn = new JButton("Main Menu");
 
     private Controller controller;
 
     public CustomerProduct(Controller controller){
         this.controller=controller;
-        setSize(475,240);
+        setSize(675,340);
         setVisible(true);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -59,6 +60,12 @@ public class CustomerProduct extends JFrame implements ActionListener {
         centerPnl.add(radioBtnName);
         centerPnl.add(radioBtnPrice);
         centerPnl.add(radioBtnSpl);
+        centerPnl.add(menuBtn);
+        menuBtn.addActionListener(this);
+        searchBtn.addActionListener(this);
+        radioBtnName.addActionListener(this);
+        radioBtnSpl.addActionListener(this);
+        radioBtnPrice.addActionListener(this);
 
         group.add(radioBtnName);
         group.add(radioBtnPrice);
@@ -72,12 +79,26 @@ public class CustomerProduct extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-    if (e.getSource()==searchBtn){
-        if (radioBtnPrice.isSelected()){
-            keyWrdTxf.getText();
-            
+        if (e.getSource()==searchBtn){
+            String searchword =  keyWrdTxf.getText();
+
+            if (radioBtnPrice.isSelected()){
+
+
+
+            }else if (radioBtnName.isSelected()){
+
+            }
+            else if (radioBtnSpl.isSelected()){
+
+
+            }
         }
-    }
+        if (e.getSource()==menuBtn){
+            this.dispose();
+            new CustomerMainMenu(controller);
+        }
+
     }
 
     public void updateTable(){
