@@ -70,8 +70,8 @@ public class AdminOrder extends JFrame implements ActionListener {
 
         if (e.getSource()==btnConfirm){
 
-            //Kalla på metod här
-            tfId.setText(null);
+            Orders.confirmOrder(Integer.parseInt(tfId.getText()));
+      //      tfId.setText(null); //this line created some kind of bugg
             updateTable();
         }
         if (e.getSource()==btnMenu){

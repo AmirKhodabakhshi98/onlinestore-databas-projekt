@@ -25,6 +25,21 @@ public class CustomerProduct extends JFrame implements ActionListener {
     private ButtonGroup group;
     private JButton menuBtn = new JButton("Main Menu");
 
+    private JPanel pnlMain = new JPanel();
+    private JPanel pnlShoppingList =  new JPanel();
+    private JPanel pnlShoppingListSouth =  new JPanel();
+    private JPanel pnlShoppingListNorth =  new JPanel();
+    private JLabel lblEmpty = new JLabel("");
+    private JLabel lblEmpty2 = new JLabel("");
+    private JLabel lblID = new JLabel("ProductID");
+    private JLabel lblQuantity = new JLabel("Quantity");
+    private JTextField tfIdAdd = new JTextField();
+    private JTextField tfIdDelete = new JTextField();
+    private JTextField tfQuantity = new JTextField();
+    private JButton btnAdd = new JButton("ADD");
+    private JButton btnDelete = new JButton("Delete");
+    private JButton btnPurchase = new JButton("Purchase");
+
     private Controller controller;
 
     public CustomerProduct(Controller controller){
@@ -33,7 +48,9 @@ public class CustomerProduct extends JFrame implements ActionListener {
         setVisible(true);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new BorderLayout());
+        setLayout(new GridLayout(1,2));
+
+        pnlMain.setLayout(new BorderLayout());
 
         northPanel.setBackground(Color.white);
         //northPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -61,6 +78,8 @@ public class CustomerProduct extends JFrame implements ActionListener {
         centerPnl.add(radioBtnPrice);
         centerPnl.add(radioBtnSpl);
         centerPnl.add(menuBtn);
+
+
         menuBtn.addActionListener(this);
         searchBtn.addActionListener(this);
         radioBtnName.addActionListener(this);
@@ -70,6 +89,27 @@ public class CustomerProduct extends JFrame implements ActionListener {
         group.add(radioBtnName);
         group.add(radioBtnPrice);
         group.add(radioBtnSpl);
+
+
+        pnlShoppingList.setLayout(new GridLayout(2,1));
+        pnlShoppingListSouth.setLayout(new GridLayout(4,3));
+        pnlShoppingListNorth.setLayout(new GridLayout(1,1));
+        pnlShoppingList.add(lblEmpty);
+        pnlShoppingList.add(lblID);
+        pnlShoppingList.add(lblQuantity);
+        pnlShoppingList.add(btnAdd);
+        pnlShoppingList.add(tfIdAdd);
+        pnlShoppingList.add(tfQuantity);
+        pnlShoppingList.add(btnDelete);
+        pnlShoppingList.add(tfIdDelete);
+        pnlShoppingList.add(lblEmpty);
+        pnlShoppingList.add(btnPurchase);
+
+        add(pnlShoppingList, BorderLayout.EAST);
+
+        btnAdd.addActionListener(this);
+        btnDelete.addActionListener(this);
+        btnPurchase.addActionListener(this);
 
         northPanel.validate();
         centerPnl.validate();

@@ -1,6 +1,6 @@
 CREATE PROCEDURE confirmOrder
 
-    @Order_id int NOT NULL
+    @Order_id int
 
 
 AS

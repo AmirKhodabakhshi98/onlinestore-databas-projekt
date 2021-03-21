@@ -20,6 +20,7 @@ public class CustomerOrder extends JFrame implements ActionListener {
     private JButton btnMenu = new JButton("Main Menu");
     private JButton btnDelete = new JButton("Delete Order");
     private JButton btnGetProds = new JButton("Show products");
+    private JButton btnSeeOrders = new JButton("All Orders");
 
     private JLabel lblProds = new JLabel("Order ID to show products");
     private JTextField tfProds = new JTextField();
@@ -66,13 +67,14 @@ public class CustomerOrder extends JFrame implements ActionListener {
         pnlButtons.add(tfDelete);
         pnlButtons.add(btnDelete);
         pnlButtons.add(btnMenu);
+        pnlButtons.add(btnSeeOrders);
         pnlLeft.add(pnlButtons, BorderLayout.SOUTH);
 
 
         btnDelete.addActionListener(this);
         btnMenu.addActionListener(this);
         btnGetProds.addActionListener(this);
-
+        btnSeeOrders.addActionListener(this);
         add(pnlLeft);
         add(pnlRight);
         setSize(950,500);
@@ -120,6 +122,10 @@ public class CustomerOrder extends JFrame implements ActionListener {
             Orders.deleteOrder(id);
 
             tfDelete.setText(null);
+        }
+
+        if (e.getSource()==btnSeeOrders){
+            updateProductTable(controller.getUserOrders());
         }
 
 

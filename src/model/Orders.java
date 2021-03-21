@@ -196,6 +196,13 @@ public class Orders {
         return Controller.resultSetToArray(res);
     }
 
+
+    public static void confirmOrder(int orderID){
+        String query = "EXEC confirmOrder @Order_id = " + orderID;
+        Connection.executeQueryNoResult(query);
+    }
+
+
     public static Object[] maxMonthlyOrder(){
         Object[] returnData = new Object[2];
 
