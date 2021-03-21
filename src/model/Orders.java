@@ -29,8 +29,8 @@ public class Orders {
     //Method to calculate product price at a given date taking in account quantity and discount
     public static int calculateDiscountedPrice(int productID, int quantity, String dateStamp){
 
-
-        if (dateStamp == null || dateStamp.equals("")){ //if datestamp is empty or null it gets the current datetime
+        //if datestamp is empty or null it gets the current datetime
+        if (dateStamp == null || dateStamp.equals("")){
             Date date = new Date();
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             dateStamp = formatter.format(date);
@@ -38,12 +38,13 @@ public class Orders {
 
         }
 
-        String query = "SELECT Base_price FROM Product where Product_id = " + productID; //Gets the base price of a product
+        //Gets the base price of a product
+        String query = "SELECT Base_price FROM Product where Product_id = " + productID;
         ResultSet res = Connection.executeQueryWithResult(query);
-
         try {
-
+            res.next();
             int basePrice = res.getInt("Base_price");
+
 
         //gets the discount percentage applied to the product at the given date
         query = "Select Percentage \n" +
@@ -54,7 +55,8 @@ public class Orders {
 
        int percentage;
 
-        if (res == null || !res.first()) { //check if there is discount. checks if null or if it isnt on first row which would mean its empty
+       //check if there is discount. checks if null or if it isnt on first row which would mean its empty
+        if (res == null || !res.first()) {
 
              percentage=0;
 
@@ -64,8 +66,9 @@ public class Orders {
 
         }
 
-        double finalPrice = basePrice * quantity * (1 - percentage/100); //calculates total price
-
+            //calculates total price for given quantity and applied discount
+        double finalPrice = basePrice * quantity * (1 - percentage/100.0);
+            System.out.println("final price from  orders");
 
             return (int)finalPrice;
 

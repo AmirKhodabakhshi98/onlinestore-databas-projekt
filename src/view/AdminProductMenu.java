@@ -110,6 +110,7 @@ public class AdminProductMenu extends JFrame implements ActionListener {
         panelRight.add(panel, BorderLayout.CENTER);
         this.getContentPane().add(panelRight);
         revalidate();
+
     }
 
     public void updateTable(String[][] arr){

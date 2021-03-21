@@ -3,7 +3,6 @@ package view;
 import controllers.Controller;
 import database.Connection;
 import model.Discount;
-import model.Product;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -42,26 +41,33 @@ public class AdminDiscount extends JFrame implements ActionListener {
     private JButton btnDiscountToProduct = new JButton("Add discount to product");
     private JButton btnMain = new JButton("Main Menu");
     private JButton btnSeeDisc = new JButton("Discounts");
-    private JButton btnSeeProd = new JButton("Discounted products");
+    private JButton btnSeeSpecificProdDiscount = new JButton("Search ProductID");
+    private JButton btnseeAllProductDiscount = new JButton("All product discounts");
 
-    private String[] columnNames = {};
+    private String[] discountsColumnNames = {"ID", "Description", "Percentage"};
+    private String[] allProductDiscountColumnNames = {"ProductID", "DiscountID", "StartDate", "EndDate", "Description", "Percentage"};
+    private String[] specificProductDiscountColumnNames = {"ProdID", "DisctID", "SDate", "EDate", "Desc", "%", "FinalPrice"};
+
+    private JTextField tfProductDiscountID = new JTextField();
 
 
     //Class for admins gui interaction with discounts
     public AdminDiscount(Controller controller){
         this.setLayout(new GridLayout(1,2));
         this.controller=controller;
-        setSize(900,500);
+        setSize(1000,500);
         setLocationRelativeTo(null);
         setTitle("Admin Discount Menu");
 
         Border borderRightTop = BorderFactory.createTitledBorder("Create new discount");
         Border borderRightBottom = BorderFactory.createTitledBorder("Add discount to a product");
 
-        pnlBtns.setLayout(new GridLayout(1,3));
+        pnlBtns.setLayout(new GridLayout(3,2));
         pnlBtns.add(btnSeeDisc);
-        pnlBtns.add(btnSeeProd);
         pnlBtns.add(btnMain);
+        pnlBtns.add(tfProductDiscountID);
+        pnlBtns.add(btnSeeSpecificProdDiscount);
+        pnlBtns.add(btnseeAllProductDiscount);
 
 
         GridLayout gridLayout = new GridLayout(2,1);
@@ -89,7 +95,7 @@ public class AdminDiscount extends JFrame implements ActionListener {
         pnlRightBottom.setBorder(borderRightBottom);
 
 
-        table= new JTable(Product.getAllProducts(), columnNames);
+        table= new JTable(Discount.seeAllDiscounts(), discountsColumnNames);
         table.setEnabled(false);    //Makes table not editable
 
         pnlLeft.setLayout(new BorderLayout());
@@ -106,7 +112,8 @@ public class AdminDiscount extends JFrame implements ActionListener {
         btnMain.addActionListener(this);
         btnNewDiscount.addActionListener(this);
         btnSeeDisc.addActionListener(this);
-        btnSeeProd.addActionListener(this);
+        btnSeeSpecificProdDiscount.addActionListener(this);
+        btnseeAllProductDiscount.addActionListener(this);
 
 
         setVisible(true);
@@ -121,27 +128,36 @@ public class AdminDiscount extends JFrame implements ActionListener {
     }
 
 
+    public void updateTable(String[][] arr, String[] columnNames){
+        this.getContentPane().remove(table);
+        table= new JTable(arr, columnNames);
+        pnlLeft.add(new JScrollPane(table), BorderLayout.CENTER);
+        revalidate();
+
+    }
+
     public void actionPerformed(ActionEvent e) {
 
         if (e.getSource()==btnMain){
             this.dispose();
             new AdminMenu(controller);
         }
+
+        //see all discounts
         if (e.getSource()==btnSeeDisc){
-            //functionality to see all discounts
-
-
-
-
-        }
-        if (e.getSource()==btnSeeProd){
-            //functionality to see all products w discount
-
+            updateTable(Discount.seeAllDiscounts(),discountsColumnNames);
 
 
         }
-
-
+        //see discount history of a product.
+        if (e.getSource()==btnSeeSpecificProdDiscount){
+            int id = Integer.parseInt(tfProductDiscountID.getText());
+            tfProductDiscountID.setText(null);
+            updateTable(Discount.seeSpecificProductDiscountHistory(id), specificProductDiscountColumnNames); //displays discount history for product based on id. inputs relevant column names
+        }
+        if (e.getSource()==btnseeAllProductDiscount){
+            updateTable(Discount.seeAllProductDiscountHistory(), allProductDiscountColumnNames);
+        }
 
 
         if (e.getSource()==btnNewDiscount){
@@ -163,9 +179,6 @@ public class AdminDiscount extends JFrame implements ActionListener {
         if (e.getSource()==btnDiscountToProduct){
 
             try{
-                int x = Integer.parseInt(tfProductId.getText());
-                x = Integer.parseInt(tfDiscountId.getText());
-
 
                 Discount.addProductDiscount(Integer.parseInt(tfProductId.getText()), Integer.parseInt(tfDiscountId.getText()),
                         tfStart.getText(), tfEnd.getText());
