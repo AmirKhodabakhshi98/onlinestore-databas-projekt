@@ -15,7 +15,7 @@ import java.sql.SQLException;
 public class Controller {
 
 
-    private String username;
+    public String username;
 
 
     //Logging in a customer

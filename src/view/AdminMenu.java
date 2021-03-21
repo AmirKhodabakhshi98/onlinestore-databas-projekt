@@ -36,6 +36,8 @@ public class AdminMenu extends JFrame implements ActionListener{
         btnDiscountPage.addActionListener(this);
         btnLogOut.addActionListener(this);
 
+        this.setTitle("Admin Main Menu");
+
         setLocationRelativeTo(null);
         setVisible(true);
     }

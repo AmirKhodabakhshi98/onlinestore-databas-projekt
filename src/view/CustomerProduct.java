@@ -1,6 +1,7 @@
 package view;
 
 import controllers.Controller;
+import model.Orders;
 import model.Product;
 
 import javax.swing.*;
@@ -33,18 +34,25 @@ public class CustomerProduct extends JFrame implements ActionListener {
     private JLabel lblEmpty2 = new JLabel("");
     private JLabel lblID = new JLabel("ProductID");
     private JLabel lblQuantity = new JLabel("Quantity");
+    private JLabel lblPriceText = new JLabel("Total Price: ");
+    private JLabel lblPriceNbr = new JLabel("");
+
     private JTextField tfIdAdd = new JTextField();
     private JTextField tfIdDelete = new JTextField();
     private JTextField tfQuantity = new JTextField();
+
     private JButton btnAdd = new JButton("ADD");
     private JButton btnDelete = new JButton("Delete");
     private JButton btnPurchase = new JButton("Purchase");
+
+    private JTable tblShoppingList;
+    private String[] shoppingListColumns = {"ProductID", "Quantity", "FinalPrice"};
 
     private Controller controller;
 
     public CustomerProduct(Controller controller){
         this.controller=controller;
-        setSize(675,340);
+        setSize(1100,500);
         setVisible(true);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -63,8 +71,8 @@ public class CustomerProduct extends JFrame implements ActionListener {
         keyWrdTxf.setPreferredSize(new Dimension(110,20));
         prodTable = new JTable(Product.getAllProducts(), columnNames);
         prodTable.setEnabled(false);
-        add(northPanel, BorderLayout.NORTH);
-        add(centerPnl, BorderLayout.CENTER);
+        pnlMain.add(northPanel, BorderLayout.NORTH);
+        pnlMain.add(centerPnl, BorderLayout.CENTER);
         northPanel.add(prodTable);
         northPanel.add(new JScrollPane(prodTable), BorderLayout.NORTH);
         radioBtnName.setBackground(Color.WHITE);
@@ -92,20 +100,32 @@ public class CustomerProduct extends JFrame implements ActionListener {
 
 
         pnlShoppingList.setLayout(new GridLayout(2,1));
-        pnlShoppingListSouth.setLayout(new GridLayout(4,3));
         pnlShoppingListNorth.setLayout(new GridLayout(1,1));
-        pnlShoppingList.add(lblEmpty);
-        pnlShoppingList.add(lblID);
-        pnlShoppingList.add(lblQuantity);
-        pnlShoppingList.add(btnAdd);
-        pnlShoppingList.add(tfIdAdd);
-        pnlShoppingList.add(tfQuantity);
-        pnlShoppingList.add(btnDelete);
-        pnlShoppingList.add(tfIdDelete);
-        pnlShoppingList.add(lblEmpty);
-        pnlShoppingList.add(btnPurchase);
 
-        add(pnlShoppingList, BorderLayout.EAST);
+        pnlShoppingListSouth.setLayout(new GridLayout(4,3));
+        pnlShoppingListSouth.add(lblEmpty);
+        pnlShoppingListSouth.add(lblID);
+        pnlShoppingListSouth.add(lblQuantity);
+        pnlShoppingListSouth.add(btnAdd);
+        pnlShoppingListSouth.add(tfIdAdd);
+        pnlShoppingListSouth.add(tfQuantity);
+        pnlShoppingListSouth.add(btnDelete);
+        pnlShoppingListSouth.add(tfIdDelete);
+        pnlShoppingListSouth.add(lblEmpty2);
+        pnlShoppingListSouth.add(btnPurchase);
+        pnlShoppingListSouth.add(lblPriceText);
+        lblPriceNbr.setText(String.valueOf(Orders.totalPrice(controller.username))); //gets the cart current total price
+        pnlShoppingListSouth.add(lblPriceNbr);
+
+
+        tblShoppingList = new JTable(Orders.fetchCartItems(controller.username), shoppingListColumns);
+        tblShoppingList.setEnabled(false);
+        pnlShoppingListNorth.add(new JScrollPane(tblShoppingList));
+
+        pnlShoppingList.add(pnlShoppingListNorth);
+        pnlShoppingList.add(pnlShoppingListSouth);
+        add(pnlMain);
+        add(pnlShoppingList);
 
         btnAdd.addActionListener(this);
         btnDelete.addActionListener(this);
@@ -113,9 +133,21 @@ public class CustomerProduct extends JFrame implements ActionListener {
 
         northPanel.validate();
         centerPnl.validate();
+        pnlShoppingListNorth.validate();
+        pnlShoppingListSouth.validate();
+        pnlShoppingList.validate();
+        this.validate();
 
     }
 
+    public void updateShoppingList(){
+   //     this.getContentPane().remove(tblShoppingList);
+        pnlShoppingListNorth.removeAll();
+        tblShoppingList = new JTable(Orders.fetchCartItems(controller.username),shoppingListColumns);
+        pnlShoppingListNorth.add(new JScrollPane(tblShoppingList));
+        lblPriceNbr.setText(String.valueOf(Orders.totalPrice(controller.username))); //gets the cart current total price
+        revalidate();
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -137,6 +169,28 @@ public class CustomerProduct extends JFrame implements ActionListener {
         if (e.getSource()==menuBtn){
             this.dispose();
             new CustomerMainMenu(controller);
+        }
+
+
+        if (e.getSource()==btnAdd){
+            int id = Integer.parseInt(tfIdAdd.getText());
+            int quantity = Integer.parseInt(tfQuantity.getText());
+
+            Orders.addToCart(controller.username,id,quantity);
+            updateShoppingList();
+        }
+        if (e.getSource()==btnDelete){
+           int id = Integer.parseInt(tfIdDelete.getText());
+
+           Orders.deleteFromCart(controller.username,id);
+            updateShoppingList();
+
+        }
+        if (e.getSource()==btnPurchase){
+
+            //skriva metod här
+            updateShoppingList();
+
         }
 
     }

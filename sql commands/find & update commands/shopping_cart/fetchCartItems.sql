@@ -6,6 +6,6 @@ CREATE PROCEDURE fetchCartItems
 
 AS
 
-SELECT Product_id, Quantity FROM Shopping_Cart_Item
+SELECT Product_id, Quantity, FinalPrice FROM Shopping_Cart_Item
 		WHERE Username = @username
 GO

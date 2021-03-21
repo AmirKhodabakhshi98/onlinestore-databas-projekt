@@ -14,7 +14,7 @@ public class CustomerMainMenu extends JFrame implements ActionListener {
     private JButton prodBtn = new JButton("Products");
     private JButton shopCartBtn = new JButton("Shopping cart");
     private JButton orderBtn = new JButton("Orders");
-    private JButton backBtn = new JButton("Back");
+    private JButton backBtn = new JButton("Log out");
     private JPanel mainPnl = new JPanel();
 
 
@@ -32,7 +32,7 @@ public class CustomerMainMenu extends JFrame implements ActionListener {
         mainPnl.setPreferredSize(new Dimension(250, 240));
         mainPnl.add(prodBtn);
         prodBtn.setBounds(60, 20, 125, 25);
-        mainPnl.add(shopCartBtn);
+     //   mainPnl.add(shopCartBtn);
         shopCartBtn.setBounds(60, 60, 125, 25);
         mainPnl.add(orderBtn);
         orderBtn.setBounds(60, 100, 125, 25);
@@ -45,6 +45,8 @@ public class CustomerMainMenu extends JFrame implements ActionListener {
         orderBtn.addActionListener(this);
         backBtn.addActionListener(this);
 
+        this.setTitle("Customer Main Menu");
+
     }
 
     @Override
@@ -55,7 +57,7 @@ public class CustomerMainMenu extends JFrame implements ActionListener {
         }
         if (e.getSource()==shopCartBtn){
             this.dispose();
-            new ShoppingList(controller);
+           // new ShoppingList(controller);
         }
         if (e.getSource()==orderBtn){
             this.dispose();

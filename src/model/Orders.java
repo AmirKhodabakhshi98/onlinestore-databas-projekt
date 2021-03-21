@@ -26,66 +26,18 @@ public class Orders {
     }
 
 
-    //Method to calculate product price at a given date taking in account quantity and discount
-    public static int calculateDiscountedPrice(int productID, int quantity, String dateStamp){
-
-        //if datestamp is empty or null it gets the current datetime
-        if (dateStamp == null || dateStamp.equals("")){
-            Date date = new Date();
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            dateStamp = formatter.format(date);
-            System.out.println(dateStamp);
-
-        }
-
-        //Gets the base price of a product
-        String query = "SELECT Base_price FROM Product where Product_id = " + productID;
-        ResultSet res = Connection.executeQueryWithResult(query);
-        try {
-            res.next();
-            int basePrice = res.getInt("Base_price");
 
 
-        //gets the discount percentage applied to the product at the given date
-        query = "Select Percentage \n" +
-                "FROM Discount\n" +
-                "JOIN Product_discount on Discount.Discount_id = Product_discount.Discount_id\n" +
-                "WHERE '" + dateStamp + "' >= Start_date AND '" + dateStamp + "' <= End_date AND Product_discount.Product_id = " + productID;
-        res = Connection.executeQueryWithResult(query);
-
-       int percentage;
-
-       //check if there is discount. checks if null or if it isnt on first row which would mean its empty
-        if (res == null || !res.first()) {
-
-             percentage=0;
-
-        }else {
-
-             percentage = res.getInt("Percentage");
-
-        }
-
-            //calculates total price for given quantity and applied discount
-        double finalPrice = basePrice * quantity * (1 - percentage/100.0);
-            System.out.println("final price from  orders");
-
-            return (int)finalPrice;
-
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
-        return -1;
-
-    }
-
-
-    public static void deleteFromCart(int productId){
-        String query = "EXEC deleteFromCart @Product_ID = " + productId;
+    public static void deleteFromCart(String username, int productId){
+        String query = "EXEC deleteFromCart @Product_ID = " + productId + ", @username = '" + username + "'";
         Connection.executeQueryNoResult(query);
     }
 
+    public static String[][] fetchCartItems(String username){
+        String query = "EXEC fetchCartItems @username = '" + username + "'";
+        ResultSet res = Connection.executeQueryWithResult(query);
+        return Controller.resultSetToArray(res);
+    }
 
     public static void createOrder(String username, int[] productId, int[] quantity){
         String query = "EXEC newOrder @username = '" + username + "'"; //skapar ny order
@@ -109,6 +61,7 @@ public class Orders {
 
         try {
 
+            res.next();
             return res.getInt("price"); // fixa sen
 
         } catch (SQLException throwables) {
@@ -216,4 +169,60 @@ public class Orders {
         return returnData;
 
     }
+
+
+    //Method to calculate product price at a given date taking in account quantity and discount
+    public static int calculateDiscountedPrice(int productID, int quantity, String dateStamp){
+
+        //if datestamp is empty or null it gets the current datetime
+        if (dateStamp == null || dateStamp.equals("")){
+            Date date = new Date();
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            dateStamp = formatter.format(date);
+            System.out.println(dateStamp);
+
+        }
+
+        //Gets the base price of a product
+        String query = "SELECT Base_price FROM Product where Product_id = " + productID;
+        ResultSet res = Connection.executeQueryWithResult(query);
+        try {
+            res.next();
+            int basePrice = res.getInt("Base_price");
+
+
+            //gets the discount percentage applied to the product at the given date
+            query = "Select Percentage \n" +
+                    "FROM Discount\n" +
+                    "JOIN Product_discount on Discount.Discount_id = Product_discount.Discount_id\n" +
+                    "WHERE '" + dateStamp + "' >= Start_date AND '" + dateStamp + "' <= End_date AND Product_discount.Product_id = " + productID;
+            res = Connection.executeQueryWithResult(query);
+
+            int percentage;
+
+            //check if there is discount. checks if null or if it isnt on first row which would mean its empty
+            if (res == null || !res.first()) {
+
+                percentage=0;
+
+            }else {
+
+                percentage = res.getInt("Percentage");
+
+            }
+
+            //calculates total price for given quantity and applied discount
+            double finalPrice = basePrice * quantity * (1 - percentage/100.0);
+            System.out.println("final price from  orders");
+
+            return (int)finalPrice;
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return -1;
+
+    }
+
 }

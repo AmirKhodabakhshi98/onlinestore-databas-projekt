@@ -27,7 +27,7 @@ public class AdminOrder extends JFrame implements ActionListener {
         pnlSouth = new JPanel();
         pnlSouth.setLayout(new GridLayout(1,4));
 
-        setSize(800,500);
+        setSize(900,500);
         setLocationRelativeTo(null);
         setTitle("Admin Order Menu");
       //  setLayout(new GridLayout(1,2));

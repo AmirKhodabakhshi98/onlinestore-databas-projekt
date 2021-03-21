@@ -1,9 +1,9 @@
 CREATE PROCEDURE addToCart
 
-@Username nvarchar(50) NOT NULL,
-@Product_ID int NOT NULL,
-@Quantity int NOT NULL,
-@FinalPrice int NOT NULL
+@Username nvarchar(50),
+@Product_ID int,
+@Quantity int,
+@FinalPrice int
 
 
 AS
