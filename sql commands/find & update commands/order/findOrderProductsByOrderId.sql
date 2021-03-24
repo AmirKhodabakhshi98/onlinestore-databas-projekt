@@ -1,7 +1,7 @@
 CREATE PROCEDURE findOrderProductsByOrderId
-
+--Finds all products belonging to an order
 @Order_id int,
-@Username nvarchar(50)
+@Username nvarchar(50) --so a user can't accidentally access another persons ID. Username is input by the backend to be that of the logged in user.
 
 AS
 

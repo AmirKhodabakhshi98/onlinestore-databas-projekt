@@ -1,7 +1,7 @@
 CREATE PROCEDURE deleteOrder
 
-    @Order_id int
-
+    @Order_id int,
+    @username nvarchar(50)
 AS
 
 BEGIN
@@ -19,7 +19,7 @@ BEGIN
 					WHERE Order_Product.Order_id = @Order_id AND [dbo].[Order].[Confirmed] = 0;
 
 					DELETE FROM [Order]
-					WHERE Order_id = @Order_id AND Confirmed = 0;
+					WHERE Order_id = @Order_id AND Confirmed = 0 AND username = @username; --checks so order isnt confirmed and belongs to specified user
 
 
 

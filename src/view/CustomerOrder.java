@@ -43,6 +43,14 @@ public class CustomerOrder extends JFrame implements ActionListener {
             {"","","",""}
                         };
 
+    private JLabel lblOrderPrice = new JLabel("Order price: ");
+    private JLabel lblOrderProdPrice = new JLabel("Product price: ");
+    private JTextField tfOrderID = new JTextField();
+    private JTextField tfProdPriceID = new JTextField();
+    private JLabel lblOrderIdInput = new JLabel("Enter Order ID to check Price");
+    private JLabel lblOrderProdIdInput = new JLabel("Enter Product ID and date to check Price. Price: ");
+    private JLabel lblDate = new JLabel("Date ");
+
     public CustomerOrder(Controller controller){
         this.controller=controller;
         setLayout(new GridLayout(1,2));

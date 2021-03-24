@@ -1,5 +1,5 @@
 CREATE PROCEDURE findOrdersByUsername
-
+--Get all orders for a specific user
 	 @Username nvarchar(50)
 
 AS

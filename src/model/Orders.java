@@ -3,6 +3,7 @@ package model;
 import controllers.Controller;
 import database.Connection;
 
+import javax.swing.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -14,7 +15,7 @@ public class Orders {
 
     public static void addToCart(String username, int productId, int quantity){
 
-        int FinalPrice = calculateDiscountedPrice(productId,quantity,null);
+        int FinalPrice = calculateDiscountedPriceBasedOnDate(productId,quantity,null);
 
 
         String query = "EXEC addToCart @Username = '" + username + "', @Product_ID = " + productId
@@ -27,31 +28,38 @@ public class Orders {
 
 
     public static void purchase(String username){
-        String query = "EXEC PURCHASE @username = '" + username + "'";
 
-         Connection.executeQueryNoResult(query);
+        if (Orders.fetchCartItems(username).length != 0) {
 
+            String query = "EXEC PURCHASE @username = '" + username + "'";
+
+            Connection.executeQueryNoResult(query);
+        }
+        else JOptionPane.showMessageDialog(null,"Empty order");
     }
 
 
+    public static String[][] fetchCartItems(String username){
+        String query = "exec fetchCartItems @username = '" + username + "'";
+        ResultSet res = Connection.executeQueryWithResult(query);
+        String[][] arr = Controller.resultSetToArray(res);
+
+        for (int i = 0; i<arr.length; i++){
+            for (int j=0; j<arr[i].length; j++){
+                System.out.println(arr[i][j]);
+            }
+        }
+        System.out.println(arr);
+        return arr;
+    }
 
     public static void deleteFromCart(String username, int productId){
         String query = "EXEC deleteFromCart @Product_ID = " + productId + ", @username = '" + username + "'";
         Connection.executeQueryNoResult(query);
     }
 
-    public static String[][] fetchCartItems(String username){
-        String query = "EXEC fetchCartItems @username = '" + username + "'";
-        ResultSet res = Connection.executeQueryWithResult(query);
-        return Controller.resultSetToArray(res);
-    }
 
 
-
-
-    public static void createOrder(String username){
-
-    }
 
     public static int totalPrice(String username){
         String query = "EXEC totalPrice @username = '" + username + "'";
@@ -77,19 +85,21 @@ public class Orders {
 
         try {
 
+        //gets date for the order
         String query = "Select [Date] from [Order] where Order_id = " + orderID;
         ResultSet res = Connection.executeQueryWithResult(query);
         String date = res.getNString("Date");
 
+        //gets a list of products and their quantities for the order.
         query = "Select Product_id, QuantitySold from Order_Product where Order_product.Order_id = " + orderID;
         res = Connection.executeQueryWithResult(query);
 
-
+            //goes through all products in order and fetches their price, then combines them.
             while (res.next()) {
                 int productID = res.getInt("Product_id");
                 int quantity = res.getInt("QuantitySold");
 
-                orderPrice += calculateDiscountedPrice(productID,quantity,date);
+                orderPrice += calculateDiscountedPriceBasedOnDate(productID,quantity,date);    //calculates total order price
 
             }
 
@@ -99,14 +109,6 @@ public class Orders {
         }
 
         return orderPrice;
-    }
-
-    public static ResultSet getCustomerOrders(String username){
-        String query = "Select Order_id from [Order] where Username = '" + username + "'";
-        ResultSet res  = Connection.executeQueryWithResult(query);
-
-        return res;
-
     }
 
 
@@ -170,14 +172,13 @@ public class Orders {
 
 
     //Method to calculate product price at a given date taking in account quantity and discount
-    public static int calculateDiscountedPrice(int productID, int quantity, String dateStamp){
+    public static int calculateDiscountedPriceBasedOnDate(int productID, int quantity, String dateStamp){
 
         //if datestamp is empty or null it gets the current datetime
         if (dateStamp == null || dateStamp.equals("")){
             Date date = new Date();
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //create current date in same format as SQL
             dateStamp = formatter.format(date);
-            System.out.println(dateStamp);
 
         }
 
@@ -193,7 +194,7 @@ public class Orders {
             query = "Select Percentage \n" +
                     "FROM Discount\n" +
                     "JOIN Product_discount on Discount.Discount_id = Product_discount.Discount_id\n" +
-                    "WHERE '" + dateStamp + "' >= Start_date AND '" + dateStamp + "' <= End_date AND Product_discount.Product_id = " + productID;
+                    "WHERE '" + dateStamp + "' >= Start_date AND '" + dateStamp + "' <= End_date AND Product_discount.Product_id = " + productID; //checks if date is during a discount period for product
             res = Connection.executeQueryWithResult(query);
 
             int percentage;
@@ -205,13 +206,12 @@ public class Orders {
 
             }else {
 
-                percentage = res.getInt("Percentage");
+                percentage = res.getInt("Percentage"); //gets discount percentage
 
             }
 
             //calculates total price for given quantity and applied discount
             double finalPrice = basePrice * quantity * (1 - percentage/100.0);
-            System.out.println("final price from  orders");
 
             return (int)finalPrice;
 

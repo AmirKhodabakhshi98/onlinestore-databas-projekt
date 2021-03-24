@@ -122,6 +122,10 @@ public class Controller {
 
     }
 
+    public String getUsername(){
+        return username;
+    }
+
     public String[][] getUserOrderProducts(int orderID){
         return Orders.findOrderProductsByOrderId(orderID, username);
     }

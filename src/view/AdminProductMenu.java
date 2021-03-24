@@ -14,7 +14,7 @@ public class AdminProductMenu extends JFrame implements ActionListener {
     private JTable table;
     private Controller controller;
 
-    private String[] columnNames = {"ID", "Supplier", "Name", "Base Price", "Quantity"};
+    private String[] columnNames = {"P_ID", "Supplier", "Name", "Base Price", "Quantity"};
 
     private JPanel panelLeft = new JPanel();
     private JPanel panelRight = new JPanel();

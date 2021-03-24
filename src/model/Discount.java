@@ -3,9 +3,7 @@ package model;
 import controllers.Controller;
 import database.Connection;
 
-import javax.swing.*;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 public class Discount {
     private Product product;
@@ -66,7 +64,7 @@ public class Discount {
             String percentage = resultArray[i][5];
 
             //final price is calculated here using the method in orders.
-            String finalPrice = String.valueOf(Orders.calculateDiscountedPrice(Integer.parseInt(prodID),1,startDate));
+            String finalPrice = String.valueOf(Orders.calculateDiscountedPriceBasedOnDate(Integer.parseInt(prodID),1,startDate));
 
 
             //copy to new array to be returned.
