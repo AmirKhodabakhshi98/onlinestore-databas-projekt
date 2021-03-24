@@ -26,6 +26,13 @@ public class Orders {
     }
 
 
+    public static void purchase(String username){
+        String query = "EXEC PURCHASE @username = '" + username + "'";
+
+         Connection.executeQueryNoResult(query);
+
+    }
+
 
 
     public static void deleteFromCart(String username, int productId){
@@ -39,20 +46,11 @@ public class Orders {
         return Controller.resultSetToArray(res);
     }
 
-    public static void createOrder(String username, int[] productId, int[] quantity){
-        String query = "EXEC newOrder @username = '" + username + "'"; //skapar ny order
-        Connection.executeQueryNoResult(query);
 
-        for (int i = 0; i < productId.length; i++){
-            int id = productId[i];
-            int quant = quantity[i];
 
-             query = "EXEC createOrderProduct @Username = '" + username + "', @Product_id = "
-                    + id + "@Quantity = " + quant; //lägger in alla items
-             Connection.executeQueryNoResult(query);
-        }
-        query = "EXEC clearCart"; //tömmer kundvagn
-        Connection.executeQueryNoResult(query);
+
+    public static void createOrder(String username){
+
     }
 
     public static int totalPrice(String username){
@@ -121,9 +119,9 @@ public class Orders {
     }
 
 
-    public static String[][] findOrderProductsByOrderId(int id){
+    public static String[][] findOrderProductsByOrderId(int id, String username){
 
-        String query = "EXEC findOrderProductsByOrderId @Order_id = " + id;
+        String query = "EXEC findOrderProductsByOrderId @Order_id = " + id + ", @Username = '" + username + "'";
 
         ResultSet res = Connection.executeQueryWithResult(query);
 
@@ -224,5 +222,26 @@ public class Orders {
         return -1;
 
     }
+
+
+        /*
+    public static void createOrder(String username, int[] productId, int[] quantity){
+        String query = "EXEC newOrder @username = '" + username + "'"; //skapar ny order
+        Connection.executeQueryNoResult(query);
+
+        for (int i = 0; i < productId.length; i++){
+            int id = productId[i];
+            int quant = quantity[i];
+
+             query = "EXEC createOrderProduct @Username = '" + username + "', @Product_id = "
+                    + id + "@Quantity = " + quant; //lägger in alla items
+             Connection.executeQueryNoResult(query);
+        }
+        query = "EXEC clearCart"; //tömmer kundvagn
+        Connection.executeQueryNoResult(query);
+    }
+
+
+     */
 
 }

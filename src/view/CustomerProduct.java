@@ -5,6 +5,7 @@ import model.Orders;
 import model.Product;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,11 +16,12 @@ public class CustomerProduct extends JFrame implements ActionListener {
     private JPanel northPanel = new JPanel();
     private JPanel southPnl = new JPanel();
     private JPanel centerPnl = new JPanel();
-    private String[] columnNames = {"ID", "Supplier", "Name", "Base Price", "Quantity"};
+    private String[] prodColumnNames = {"ID", "Supplier", "Name", "Base Price", "Quantity", "Discount", "% off"};
     private JTable prodTable;
     private JRadioButton radioBtnName = new JRadioButton("Name");
     private JRadioButton radioBtnSpl = new JRadioButton("Supplier");
-    private JRadioButton radioBtnPrice = new JRadioButton("Price");
+    private JRadioButton radioBtnPrice = new JRadioButton("Base Price");
+    private JRadioButton radioBtnID = new JRadioButton("ID");
     private JLabel keyLbl = new JLabel("Keyword");
     private JTextField keyWrdTxf = new JTextField();
     private JButton searchBtn = new JButton("Search");
@@ -44,6 +46,7 @@ public class CustomerProduct extends JFrame implements ActionListener {
     private JButton btnAdd = new JButton("ADD");
     private JButton btnDelete = new JButton("Delete");
     private JButton btnPurchase = new JButton("Purchase");
+    private JButton btnAllProds = new JButton("All Products");
 
     private JTable tblShoppingList;
     private String[] shoppingListColumns = {"ProductID", "Quantity", "FinalPrice"};
@@ -69,7 +72,7 @@ public class CustomerProduct extends JFrame implements ActionListener {
         northPanel.setBackground(Color.white);
         searchBtn.setBounds(20,60,110,30);
         keyWrdTxf.setPreferredSize(new Dimension(110,20));
-        prodTable = new JTable(Product.getAllProducts(), columnNames);
+        prodTable = new JTable(Product.getAllProductsAndDiscount(), prodColumnNames);
         prodTable.setEnabled(false);
         pnlMain.add(northPanel, BorderLayout.NORTH);
         pnlMain.add(centerPnl, BorderLayout.CENTER);
@@ -85,7 +88,9 @@ public class CustomerProduct extends JFrame implements ActionListener {
         centerPnl.add(radioBtnName);
         centerPnl.add(radioBtnPrice);
         centerPnl.add(radioBtnSpl);
+        centerPnl.add(radioBtnID);
         centerPnl.add(menuBtn);
+        centerPnl.add(btnAllProds);
 
 
         menuBtn.addActionListener(this);
@@ -93,11 +98,12 @@ public class CustomerProduct extends JFrame implements ActionListener {
         radioBtnName.addActionListener(this);
         radioBtnSpl.addActionListener(this);
         radioBtnPrice.addActionListener(this);
+        radioBtnID.addActionListener(this);
 
         group.add(radioBtnName);
         group.add(radioBtnPrice);
         group.add(radioBtnSpl);
-
+        group.add(radioBtnID);
 
         pnlShoppingList.setLayout(new GridLayout(2,1));
         pnlShoppingListNorth.setLayout(new GridLayout(1,1));
@@ -121,6 +127,8 @@ public class CustomerProduct extends JFrame implements ActionListener {
         tblShoppingList = new JTable(Orders.fetchCartItems(controller.username), shoppingListColumns);
         tblShoppingList.setEnabled(false);
         pnlShoppingListNorth.add(new JScrollPane(tblShoppingList));
+        pnlShoppingListNorth.setBorder(BorderFactory.createTitledBorder("Shopping cart"));
+
 
         pnlShoppingList.add(pnlShoppingListNorth);
         pnlShoppingList.add(pnlShoppingListSouth);
@@ -130,6 +138,7 @@ public class CustomerProduct extends JFrame implements ActionListener {
         btnAdd.addActionListener(this);
         btnDelete.addActionListener(this);
         btnPurchase.addActionListener(this);
+        btnAllProds.addActionListener(this);
 
         northPanel.validate();
         centerPnl.validate();
@@ -140,13 +149,27 @@ public class CustomerProduct extends JFrame implements ActionListener {
 
     }
 
+    //updates shopping list table
     public void updateShoppingList(){
-   //     this.getContentPane().remove(tblShoppingList);
         pnlShoppingListNorth.removeAll();
+        pnlShoppingListNorth.setBorder(BorderFactory.createTitledBorder("Shopping cart"));
         tblShoppingList = new JTable(Orders.fetchCartItems(controller.username),shoppingListColumns);
+        tblShoppingList.setEnabled(false);
         pnlShoppingListNorth.add(new JScrollPane(tblShoppingList));
         lblPriceNbr.setText(String.valueOf(Orders.totalPrice(controller.username))); //gets the cart current total price
         revalidate();
+    }
+
+
+    //updates product table(left) with input array
+    public void updateTable(String[][] arr){
+        northPanel.removeAll();
+        prodTable = new JTable(arr, prodColumnNames);
+        prodTable.setEnabled(false);
+
+        northPanel.add(new JScrollPane(prodTable));
+        revalidate();
+
     }
 
     @Override
@@ -154,18 +177,27 @@ public class CustomerProduct extends JFrame implements ActionListener {
         if (e.getSource()==searchBtn){
             String searchword =  keyWrdTxf.getText();
 
+            //updates table with search results based on radiobutton selection
             if (radioBtnPrice.isSelected()){
-
+                updateTable(Product.customerSearchPrice(Integer.parseInt(searchword)));
 
 
             }else if (radioBtnName.isSelected()){
+                updateTable(Product.customerSearchName(searchword));
 
             }
             else if (radioBtnSpl.isSelected()){
-
+                updateTable(Product.customerSearchSupplier(searchword));
 
             }
+
+            else if (radioBtnID.isSelected()){
+                updateTable(Product.customerSearchID(Integer.parseInt(searchword)));
+
+            }
+
         }
+
         if (e.getSource()==menuBtn){
             this.dispose();
             new CustomerMainMenu(controller);
@@ -176,28 +208,33 @@ public class CustomerProduct extends JFrame implements ActionListener {
             int id = Integer.parseInt(tfIdAdd.getText());
             int quantity = Integer.parseInt(tfQuantity.getText());
 
-            Orders.addToCart(controller.username,id,quantity);
+            Orders.addToCart(controller.username,id,quantity); //adds selected product and quantity to cart
+
             updateShoppingList();
         }
         if (e.getSource()==btnDelete){
            int id = Integer.parseInt(tfIdDelete.getText());
 
-           Orders.deleteFromCart(controller.username,id);
+           Orders.deleteFromCart(controller.username,id); //deletes ID from cart
             updateShoppingList();
 
         }
         if (e.getSource()==btnPurchase){
 
-            //skriva metod här
+            Orders.purchase(controller.username);
             updateShoppingList();
+            updateTable((Product.getAllProductsAndDiscount()));
 
+        }
+
+        if (e.getSource()==btnAllProds){
+            updateTable(Product.getAllProductsAndDiscount());
         }
 
     }
 
-    public void updateTable(){
-        this.getContentPane().remove(prodTable);
 
-    }
+
+
 
 }

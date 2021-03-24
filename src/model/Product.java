@@ -17,7 +17,6 @@ public class Product {
     private String name;
     private int price;
     private int quantity;
-    private static String query;
 
     public Product(int id, String supplier, String name, int price, int quantity){
 
@@ -33,7 +32,7 @@ public class Product {
 
     public static void addProduct( String supplier, String name, int price, int quantity){
 
-        query = "EXEC addProduct @Supplier_name = '" + supplier + "', @Name = '" + name + "', @Base_price = " +
+        String  query = "EXEC addProduct @Supplier_name = '" + supplier + "', @Name = '" + name + "', @Base_price = " +
                 price + ", @Quantity = " + quantity;
 
         Connection.executeQueryNoResult(query);
@@ -46,7 +45,7 @@ public class Product {
 
 
 
-            query = "EXEC setProductQuantity @Product_id = '" + id + "', @Quantity = '" + quantity + "'";
+        String  query = "EXEC setProductQuantity @Product_id = '" + id + "', @Quantity = '" + quantity + "'";
 
             Connection.executeQueryNoResult(query);
 
@@ -56,7 +55,7 @@ public class Product {
     //Delete a product in db based on input id
     public static void deleteProduct(int id){
 
-        query = "EXEC deleteProduct @Product_id = " + id;
+        String query = "EXEC deleteProduct @Product_id = " + id;
 
         Connection.executeQueryNoResult(query);
     }
@@ -67,7 +66,7 @@ public class Product {
     public static String[][] getAllProducts(){
 
 
-            query = "EXEC getProducts";
+        String  query = "EXEC getProducts";
 
             ResultSet res = Connection.executeQueryWithResult(query);   // returns all products
 
@@ -75,10 +74,18 @@ public class Product {
 
     }
 
+    //Returns all products including their current discount status
+    public static String[][] getAllProductsAndDiscount(){
+        String query = "EXEC getProductsAndDiscount";
+        ResultSet res = Connection.executeQueryWithResult(query);
+
+        return Controller.resultSetToArray(res);
+    }
+
 
     public static String[][] searchProductOnSupplier(String keyword){
 
-        query = "EXEC searchSupplier @Supplier_name = '" + keyword + "'";
+        String  query = "EXEC searchSupplier @Supplier_name = '" + keyword + "'";
 
         ResultSet res = Connection.executeQueryWithResult(query);
 
@@ -88,7 +95,7 @@ public class Product {
 
     public static String[][] searchProductOnPrice(int keyword){
 
-        query = "EXEC searchProductPrice @Price = " + keyword;
+        String query = "EXEC searchProductPrice @Price = " + keyword;
 
         ResultSet res = Connection.executeQueryWithResult(query);
 
@@ -98,7 +105,7 @@ public class Product {
 
     public static String[][] searchProductOnName(String keyword){
 
-        query = "EXEC searchNameProduct @Name = '" + keyword + "'";
+        String query = "EXEC searchNameProduct @Name = '" + keyword + "'";
 
         ResultSet res = Connection.executeQueryWithResult(query);
 
@@ -108,7 +115,15 @@ public class Product {
 
 
     public static String[][] searchProductOnId (int price){
-        query = "EXEC searchProductId @Id = " + price + "";
+        String query = "EXEC searchProductId @Id = " + price + "";
+
+        ResultSet res = Connection.executeQueryWithResult(query);
+
+        return Controller.resultSetToArray(res);
+    }
+
+    public static String[][] customerSearchID(int id){
+        String query = "EXEC customerSearchID @id = " + id;
 
         ResultSet res = Connection.executeQueryWithResult(query);
 
@@ -116,6 +131,27 @@ public class Product {
     }
 
 
+    public static String[][] customerSearchName(String name){
+        String query = "EXEC customerSearchName @name = '" + name +"'";
+
+        ResultSet res = Connection.executeQueryWithResult(query);
+
+        return Controller.resultSetToArray(res);
+    }
+    public static String[][] customerSearchSupplier(String supplier){
+        String query = "EXEC customerSearchSupplier @supplier = '" + supplier + "'";
+
+        ResultSet res = Connection.executeQueryWithResult(query);
+
+        return Controller.resultSetToArray(res);
+    }
+    public static String[][] customerSearchPrice(int price){
+        String query = "EXEC customerSearchPrice @price = " + price;
+
+        ResultSet res = Connection.executeQueryWithResult(query);
+
+        return Controller.resultSetToArray(res);
+    }
 
 }
 

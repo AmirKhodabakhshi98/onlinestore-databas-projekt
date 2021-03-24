@@ -29,10 +29,7 @@ public class CustomerOrder extends JFrame implements ActionListener {
 
 
     private String[] tableOrderColumns = {"OrderId", "Username", "Confirmed", "Datetime"};
-    private String[] tableProductsColumns = {"ProductId", "Confirmed", "Datetime"};
-
-
-    String[][] arr = {{"1", "2", "3"}, {"3", "4", "4"}};
+    private String[] tableProductsColumns = {"OrderID", "ProductID","Name", "Quantity"};
 
 
 
@@ -42,6 +39,9 @@ public class CustomerOrder extends JFrame implements ActionListener {
 
     private Controller controller;
 
+    private String[][] empty2dArray= {
+            {"","","",""}
+                        };
 
     public CustomerOrder(Controller controller){
         this.controller=controller;
@@ -50,14 +50,13 @@ public class CustomerOrder extends JFrame implements ActionListener {
         pnlLeft.setLayout(new BorderLayout());
         pnlRight.setLayout(new BorderLayout());
 
-        tableOrders = new JTable(controller.getUserOrders(),tableOrderColumns); //ändra här
+        tableOrders = new JTable(controller.getUserOrders(),tableOrderColumns);
         tableOrders.setEnabled(false);
         pnlLeft.add(new JScrollPane(tableOrders),BorderLayout.CENTER);
 
-        tableProducts = new JTable(arr,tableProductsColumns);
+        tableProducts = new JTable(empty2dArray,tableProductsColumns);
         tableProducts.setEnabled(false);
         pnlRight.add(new JScrollPane(tableProducts));
-
 
         pnlButtons.setLayout(new GridLayout(3,3));
         pnlButtons.add(lblProds);
@@ -67,7 +66,7 @@ public class CustomerOrder extends JFrame implements ActionListener {
         pnlButtons.add(tfDelete);
         pnlButtons.add(btnDelete);
         pnlButtons.add(btnMenu);
-        pnlButtons.add(btnSeeOrders);
+ //       pnlButtons.add(btnSeeOrders);
         pnlLeft.add(pnlButtons, BorderLayout.SOUTH);
 
 
@@ -77,15 +76,28 @@ public class CustomerOrder extends JFrame implements ActionListener {
         btnSeeOrders.addActionListener(this);
         add(pnlLeft);
         add(pnlRight);
-        setSize(950,500);
+        this.setLocationRelativeTo(null);
+        setSize(1100,600);
         setVisible(true);
 
     }
 
-    public void updateProductTable(String[][] arr){  //hämta elr mata in???????????
-        this.getContentPane().remove(tableProducts);
-        tableProducts= new JTable(arr, tableProductsColumns); //hämta elr mata in?
-        pnlLeft.add(new JScrollPane(tableProducts));
+    public void updateProductTable(String[][] arr){
+        pnlRight.removeAll();
+        tableProducts= new JTable(arr, tableProductsColumns);
+        pnlRight.add(new JScrollPane(tableProducts), BorderLayout.CENTER);
+        revalidate();
+
+    }
+
+
+
+    public void updateOrderTable(String[][] arr){
+        pnlLeft.removeAll();
+        tableOrders = new JTable(arr, tableOrderColumns);
+        pnlLeft.add(new JScrollPane(tableOrders),BorderLayout.CENTER);
+        pnlLeft.add(pnlButtons, BorderLayout.SOUTH);
+
         revalidate();
 
     }
@@ -109,11 +121,12 @@ public class CustomerOrder extends JFrame implements ActionListener {
         if (e.getSource()==btnGetProds){
             int id = Integer.parseInt(tfProds.getText());
 
-            updateProductTable(Orders.findOrderProductsByOrderId(id)); //retrieves product array based on order ID and furthers it to
+            updateProductTable(controller.getUserOrderProducts(id)); //retrieves product array based on order ID and furthers it to
                                                                         // the right table
-
             tfProds.setText(null);
         }
+
+
 
         if (e.getSource()==btnDelete){
 
@@ -122,10 +135,12 @@ public class CustomerOrder extends JFrame implements ActionListener {
             Orders.deleteOrder(id);
 
             tfDelete.setText(null);
+
+            updateOrderTable(controller.getUserOrders());
         }
 
         if (e.getSource()==btnSeeOrders){
-            updateProductTable(controller.getUserOrders());
+            updateOrderTable(controller.getUserOrders());
         }
 
 

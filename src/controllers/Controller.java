@@ -122,4 +122,8 @@ public class Controller {
 
     }
 
+    public String[][] getUserOrderProducts(int orderID){
+        return Orders.findOrderProductsByOrderId(orderID, username);
+    }
+
 }
