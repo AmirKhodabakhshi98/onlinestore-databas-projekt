@@ -122,10 +122,6 @@ public class AdminDiscount extends JFrame implements ActionListener {
     }
 
 
-    public static void main(String[] args) {
-        Connection.connect();
-        new AdminDiscount(new Controller());
-    }
 
 
     public void updateTable(String[][] arr, String[] columnNames){

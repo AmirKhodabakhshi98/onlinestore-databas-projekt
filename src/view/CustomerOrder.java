@@ -1,7 +1,6 @@
 package view;
 
 import controllers.Controller;
-import database.Connection;
 import model.Orders;
 
 import javax.swing.*;
@@ -23,7 +22,7 @@ public class CustomerOrder extends JFrame implements ActionListener {
     private JButton btnSeeOrders = new JButton("All Orders");
 
     private JLabel lblProds = new JLabel("Order ID to show products");
-    private JTextField tfProds = new JTextField();
+    private JTextField tfShowProds = new JTextField();
     private JLabel lblDelete = new JLabel("OrderId to delete");
     private JTextField tfDelete = new JTextField();
 
@@ -43,13 +42,16 @@ public class CustomerOrder extends JFrame implements ActionListener {
             {"","","",""}
                         };
 
-    private JLabel lblOrderPrice = new JLabel("Order price: ");
-    private JLabel lblOrderProdPrice = new JLabel("Product price: ");
-    private JTextField tfOrderID = new JTextField();
-    private JTextField tfProdPriceID = new JTextField();
-    private JLabel lblOrderIdInput = new JLabel("Enter Order ID to check Price");
-    private JLabel lblOrderProdIdInput = new JLabel("Enter Product ID and date to check Price. Price: ");
+
+    private JTextField tfOrderPrice = new JTextField();
+    private JTextField tfProdPrice = new JTextField();
+    private JLabel lblOrderIdInput = new JLabel("OrderID to see price");
+
+    private JLabel lblOrderProdIdInput = new JLabel("ProductID to see price");
     private JLabel lblDate = new JLabel("Date ");
+    private JButton btnOrderPrice = new JButton("Order Price");
+    private JLabel lblPrice = new JLabel("Price: ");
+
 
     public CustomerOrder(Controller controller){
         this.controller=controller;
@@ -66,14 +68,18 @@ public class CustomerOrder extends JFrame implements ActionListener {
         tableProducts.setEnabled(false);
         pnlRight.add(new JScrollPane(tableProducts));
 
-        pnlButtons.setLayout(new GridLayout(3,3));
+        pnlButtons.setLayout(new GridLayout(4,3));
         pnlButtons.add(lblProds);
-        pnlButtons.add(tfProds);
+        pnlButtons.add(tfShowProds);
         pnlButtons.add(btnGetProds);
         pnlButtons.add(lblDelete);
         pnlButtons.add(tfDelete);
         pnlButtons.add(btnDelete);
+        pnlButtons.add(lblOrderIdInput);
+        pnlButtons.add(tfOrderPrice);
+        pnlButtons.add(btnOrderPrice);
         pnlButtons.add(btnMenu);
+        pnlButtons.add(lblPrice);
  //       pnlButtons.add(btnSeeOrders);
         pnlLeft.add(pnlButtons, BorderLayout.SOUTH);
 
@@ -82,6 +88,7 @@ public class CustomerOrder extends JFrame implements ActionListener {
         btnMenu.addActionListener(this);
         btnGetProds.addActionListener(this);
         btnSeeOrders.addActionListener(this);
+        btnOrderPrice.addActionListener(this);
         add(pnlLeft);
         add(pnlRight);
         this.setLocationRelativeTo(null);
@@ -110,11 +117,7 @@ public class CustomerOrder extends JFrame implements ActionListener {
 
     }
 
-    public static void main(String[] args) {
-        Connection.connect();
-        new CustomerOrder(new Controller());
-    }
- 
+
 
 
     @Override
@@ -127,11 +130,11 @@ public class CustomerOrder extends JFrame implements ActionListener {
 
 
         if (e.getSource()==btnGetProds){
-            int id = Integer.parseInt(tfProds.getText());
+            int id = Integer.parseInt(tfShowProds.getText());
 
             updateProductTable(controller.getUserOrderProducts(id)); //retrieves product array based on order ID and furthers it to
                                                                         // the right table
-            tfProds.setText(null);
+            tfShowProds.setText(null);
         }
 
 
@@ -140,7 +143,7 @@ public class CustomerOrder extends JFrame implements ActionListener {
 
             int id = Integer.parseInt(tfDelete.getText());
 
-            Orders.deleteOrder(id);
+            Orders.deleteOrder(id, controller.username);
 
             tfDelete.setText(null);
 
@@ -149,6 +152,11 @@ public class CustomerOrder extends JFrame implements ActionListener {
 
         if (e.getSource()==btnSeeOrders){
             updateOrderTable(controller.getUserOrders());
+        }
+
+        if (e.getSource()==btnOrderPrice){
+            //sends the orderID to getOrderPrice method to show the orders price
+            lblPrice.setText("Order Price: " + Orders.getOrderPrice(Integer.parseInt(tfOrderPrice.getText()),controller.username));
         }
 
 

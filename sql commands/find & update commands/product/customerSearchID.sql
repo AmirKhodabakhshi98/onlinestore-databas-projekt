@@ -1,7 +1,7 @@
 CREATE PROCEDURE customerSearchID
 
 @id int
-
+--Method for customer to search for a product based on its ID.
 AS
 
 select Product.Product_id, Product.Supplier_name, Product.Name, Product.Base_price, Product.Quantity, Discount.Description, Discount.Percentage

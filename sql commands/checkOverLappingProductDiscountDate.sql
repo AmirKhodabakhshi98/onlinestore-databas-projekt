@@ -11,6 +11,7 @@ begin
 
     	if(@startDate>@endDate) return 0;
 
+        --checks how many rows match the where condition
         -- if a product already exists in the sales date period, return false, else return true.
         -- its >1 because the way sql server works it will count itself, i.e the input will be counted as 1.
     	if ((select count(*) from Product_discount

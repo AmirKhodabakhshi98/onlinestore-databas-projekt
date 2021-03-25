@@ -78,33 +78,43 @@ public class Orders {
 
     }
 
+
+
     //Method for getting the total price of an order
-    public static int getOrderPrice(int orderID){
+    public static int getOrderPrice(int orderID, String username){
 
         int orderPrice = 0;
 
         try {
 
-        //gets date for the order
-        String query = "Select [Date] from [Order] where Order_id = " + orderID;
-        ResultSet res = Connection.executeQueryWithResult(query);
-        String date = res.getNString("Date");
+            String q = "Select Username from [Order] where [Order].Order_id = " + orderID;
+            ResultSet r = Connection.executeQueryWithResult(q);
+            r.next();
+            if (username.equals(r.getNString("Username"))) {
 
-        //gets a list of products and their quantities for the order.
-        query = "Select Product_id, QuantitySold from Order_Product where Order_product.Order_id = " + orderID;
-        res = Connection.executeQueryWithResult(query);
+                //gets date for the order
+                String query = "Select FORMAT([date] , 'yyyy-MM-dd hh:mm:ss') AS [Date] from [Order] where Order_id = " + orderID;
+                ResultSet res = Connection.executeQueryWithResult(query);
+                res.next();
+                String date = res.getNString("Date");
 
-            //goes through all products in order and fetches their price, then combines them.
-            while (res.next()) {
-                int productID = res.getInt("Product_id");
-                int quantity = res.getInt("QuantitySold");
+                //gets a list of products and their quantities for the order.
+                query = "Select Product_id, QuantitySold from Order_Product where Order_product.Order_id = " + orderID;
+                res = Connection.executeQueryWithResult(query);
 
-                orderPrice += calculateDiscountedPriceBasedOnDate(productID,quantity,date);    //calculates total order price
+                //goes through all products in order and fetches their price, then combines them.
+                while (res.next()) {
+                    int productID = res.getInt("Product_id");
+                    int quantity = res.getInt("QuantitySold");
 
-            }
+                    orderPrice += calculateDiscountedPriceBasedOnDate(productID, quantity, date);    //calculates total order price
+
+                }
+            }else JOptionPane.showMessageDialog(null, "Error fetching order");
 
 
         }catch (SQLException e){
+            JOptionPane.showMessageDialog(null,"Error fetching order");
             e.printStackTrace();
         }
 
@@ -112,9 +122,9 @@ public class Orders {
     }
 
 
-    public static void deleteOrder(int id){
+    public static void deleteOrder(int id, String username){
 
-        String query = "EXEC deleteOrder @Order_id = " + id;
+        String query = "EXEC deleteOrder @Order_id = " + id + ", @Username = '" + username + "'";
 
         Connection.executeQueryNoResult(query);
 
@@ -222,26 +232,5 @@ public class Orders {
         return -1;
 
     }
-
-
-        /*
-    public static void createOrder(String username, int[] productId, int[] quantity){
-        String query = "EXEC newOrder @username = '" + username + "'"; //skapar ny order
-        Connection.executeQueryNoResult(query);
-
-        for (int i = 0; i < productId.length; i++){
-            int id = productId[i];
-            int quant = quantity[i];
-
-             query = "EXEC createOrderProduct @Username = '" + username + "', @Product_id = "
-                    + id + "@Quantity = " + quant; //lägger in alla items
-             Connection.executeQueryNoResult(query);
-        }
-        query = "EXEC clearCart"; //tömmer kundvagn
-        Connection.executeQueryNoResult(query);
-    }
-
-
-     */
 
 }

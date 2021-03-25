@@ -56,7 +56,7 @@ public class StartingMenu extends JFrame {
     }
     private void browse(){
         this.dispose();
-        //command here
+        new browseNoLogin(controller);
     }
 
 
