@@ -78,9 +78,44 @@ public class Orders {
 
     }
 
+    public static int getOrderProductPrice(String username, int prodID, int orderID) {
+        try {
+
+            String q = "Select Username from [Order] where [Order].Order_id = " + orderID;
+            ResultSet r = Connection.executeQueryWithResult(q);
+            r.next();
+
+            if (username.equals(r.getNString("Username"))) {
 
 
-    //Method for getting the total price of an order
+                //gets date for the order
+                String query = "Select FORMAT([date] , 'yyyy-MM-dd hh:mm:ss') AS [Date] from [Order] where Order_id = " + orderID;
+                ResultSet res = Connection.executeQueryWithResult(query);
+                res.next();
+                String date = res.getNString("Date");
+
+                query = "SELECT QuantitySold FROM Order_product WHERE Order_Product.Order_id = " + orderID +  " AND Order_Product.Product_id = " + prodID;
+                res = Connection.executeQueryWithResult(query);
+                res.next();
+                int quantity = res.getInt("QuantitySold");
+
+
+                int price = calculateDiscountedPriceBasedOnDate(prodID,quantity,date );//fixa
+
+                return price;
+
+            }
+
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error, check that it is your order");
+        }
+        return 0;
+    }
+
+
+        //Method for getting the total price of an order
     public static int getOrderPrice(int orderID, String username){
 
         int orderPrice = 0;

@@ -44,13 +44,18 @@ public class CustomerOrder extends JFrame implements ActionListener {
 
 
     private JTextField tfOrderPrice = new JTextField();
-    private JTextField tfProdPrice = new JTextField();
     private JLabel lblOrderIdInput = new JLabel("OrderID to see price");
+    private JButton btnOrderPrice = new JButton("Order Price");
+    private JLabel lblPrice = new JLabel("Order price: ");
+
 
     private JLabel lblOrderProdIdInput = new JLabel("ProductID to see price");
-    private JLabel lblDate = new JLabel("Date ");
-    private JButton btnOrderPrice = new JButton("Order Price");
-    private JLabel lblPrice = new JLabel("Price: ");
+    private JLabel lblDate = new JLabel("Order ID for product: ");
+    private JTextField tfProdPrice = new JTextField();
+    private JTextField tfDate = new JTextField();
+    private JButton btnProdPrice = new JButton("Show product price");
+    private JLabel lblProdPrice = new JLabel("Product price: ");
+
 
 
     public CustomerOrder(Controller controller){
@@ -68,7 +73,7 @@ public class CustomerOrder extends JFrame implements ActionListener {
         tableProducts.setEnabled(false);
         pnlRight.add(new JScrollPane(tableProducts));
 
-        pnlButtons.setLayout(new GridLayout(4,3));
+        pnlButtons.setLayout(new GridLayout(7,3));
         pnlButtons.add(lblProds);
         pnlButtons.add(tfShowProds);
         pnlButtons.add(btnGetProds);
@@ -78,8 +83,19 @@ public class CustomerOrder extends JFrame implements ActionListener {
         pnlButtons.add(lblOrderIdInput);
         pnlButtons.add(tfOrderPrice);
         pnlButtons.add(btnOrderPrice);
-        pnlButtons.add(btnMenu);
         pnlButtons.add(lblPrice);
+
+        pnlButtons.add(new JLabel());
+        pnlButtons.add(new JLabel());
+
+        pnlButtons.add(lblOrderProdIdInput);
+        pnlButtons.add(tfProdPrice);
+        pnlButtons.add(new JLabel());
+        pnlButtons.add(lblDate);
+        pnlButtons.add(tfDate);
+        pnlButtons.add(btnProdPrice);
+        pnlButtons.add(lblProdPrice);
+        pnlButtons.add(btnMenu);
  //       pnlButtons.add(btnSeeOrders);
         pnlLeft.add(pnlButtons, BorderLayout.SOUTH);
 
@@ -89,6 +105,7 @@ public class CustomerOrder extends JFrame implements ActionListener {
         btnGetProds.addActionListener(this);
         btnSeeOrders.addActionListener(this);
         btnOrderPrice.addActionListener(this);
+        btnProdPrice.addActionListener(this);
         add(pnlLeft);
         add(pnlRight);
         this.setLocationRelativeTo(null);
@@ -100,6 +117,7 @@ public class CustomerOrder extends JFrame implements ActionListener {
     public void updateProductTable(String[][] arr){
         pnlRight.removeAll();
         tableProducts= new JTable(arr, tableProductsColumns);
+        tableProducts.setEnabled(false);
         pnlRight.add(new JScrollPane(tableProducts), BorderLayout.CENTER);
         revalidate();
 
@@ -110,6 +128,7 @@ public class CustomerOrder extends JFrame implements ActionListener {
     public void updateOrderTable(String[][] arr){
         pnlLeft.removeAll();
         tableOrders = new JTable(arr, tableOrderColumns);
+        tableOrders.setEnabled(false);
         pnlLeft.add(new JScrollPane(tableOrders),BorderLayout.CENTER);
         pnlLeft.add(pnlButtons, BorderLayout.SOUTH);
 
@@ -157,6 +176,13 @@ public class CustomerOrder extends JFrame implements ActionListener {
         if (e.getSource()==btnOrderPrice){
             //sends the orderID to getOrderPrice method to show the orders price
             lblPrice.setText("Order Price: " + Orders.getOrderPrice(Integer.parseInt(tfOrderPrice.getText()),controller.username));
+        }
+        if (e.getSource()==btnProdPrice){
+            int prodID = Integer.parseInt(tfProdPrice.getText());
+            int orderID = Integer.parseInt(tfDate.getText());
+            int price = Orders.getOrderProductPrice(controller.username,prodID,orderID);
+            lblProdPrice.setText("Product price: " + price);
+
         }
 
 
