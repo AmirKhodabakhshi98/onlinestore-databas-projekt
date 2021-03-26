@@ -8,7 +8,7 @@ BEGIN
 
 	BEGIN TRAN
 		BEGIN TRY
-				INSERT INTO [Order] (Username)
+				INSERT INTO [Order] (Username) --create new order
 				VALUES (@username)
 
 				DECLARE @currentOrderID int = (	SELECT TOP 1 Order_id from [Order] --get latest orderID for user

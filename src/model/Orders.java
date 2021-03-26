@@ -29,6 +29,7 @@ public class Orders {
 
     public static void purchase(String username){
 
+
         if (Orders.fetchCartItems(username).length != 0) {
 
             String query = "EXEC PURCHASE @username = '" + username + "'";
